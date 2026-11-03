@@ -1,0 +1,12 @@
+model,file,line_start,line_end,cwe_id,cwe_name,explanation
+gemini,blabController.py,51,51,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),User session data reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,75,75,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),User session data reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,120,120,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),POST parameter 'blab' reaches the SQL insert query via string formatting without proper parameterization.
+gemini,blabController.py,162,162,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),User session data reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,201,201,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),GET parameter 'blabid' reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,211,211,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),GET parameter 'blabid' reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,257,257,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),POST parameters 'blabid' and 'comment' reach the SQL insert query via string formatting without proper parameterization.
+gemini,blabController.py,300,300,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),User session data reaches the SQL query execution via string formatting without proper parameterization.
+gemini,blabController.py,292,292,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),GET parameter 'sort' reaches the SQL query string directly via concatenation.
+gemini,blabController.py,348,348,CWE-95,Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection'),POST parameter 'command' reaches the built-in eval function dynamically instantiating classes.
+gemini,blabController.py,272,272,CWE-352,Cross-Site Request Forgery (CSRF),The blabbers view disables CSRF protection via the csrf_exempt decorator while handling state-changing POST requests.
