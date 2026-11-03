@@ -1,0 +1,18 @@
+[
+  {
+    "file": "app/views/toolsController.py",
+    "line_start": 43,
+    "line_end": 43,
+    "cwe_id": "CWE-78",
+    "cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "explanation": "Untrusted user input from request.host reaches subprocess.Popen executing system commands."
+  },
+  {
+    "file": "app/views/toolsController.py",
+    "line_start": 68,
+    "line_end": 68,
+    "cwe_id": "CWE-78",
+    "cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "explanation": "Untrusted user input from fortunefile reaches os.system executing a shell command."
+  }
+]

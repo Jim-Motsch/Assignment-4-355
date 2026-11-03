@@ -1,0 +1,26 @@
+[
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 22,
+    "line_end": 22,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted input blabberUsername reaches the SQL delete query execution via string formatting."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 26,
+    "line_end": 26,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted input blabberUsername reaches the SQL select query execution via string concatenation."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 32,
+    "line_end": 32,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted inputs blabberUsername and self.username reach the SQL insert query execution via string concatenation."
+  }
+]

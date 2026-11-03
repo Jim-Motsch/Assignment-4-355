@@ -1,0 +1,10 @@
+[
+  {
+    "file": "app/views/homeController.py",
+    "line_start": 13,
+    "line_end": 16,
+    "cwe_name": "Server-Side Request Forgery (SSRF)",
+    "cwe_id": "CWE-918",
+    "explanation": "Untrusted HTTP request headers (HTTP_HOST) reach the URL construction and are requested via urllib.request.urlopen."
+  }
+]

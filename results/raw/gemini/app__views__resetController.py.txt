@@ -1,0 +1,34 @@
+[
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 63,
+    "line_end": 63,
+    "cwe_id": "CWE-295",
+    "cwe_name": "Improper Certificate Validation",
+    "explanation": "disable_ssl_certificate_validation is set to True when initializing httplib2.Http, leading to insecure connections."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 64,
+    "line_end": 64,
+    "cwe_id": "CWE-798",
+    "cwe_name": "Use of Hard-coded Credentials",
+    "explanation": "Hard-coded credentials are added to the HTTP client request."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 97,
+    "line_end": 103,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User attributes are formatted directly into the usersStatement string and executed via cursor.execute."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 108,
+    "line_end": 116,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Usernames are formatted directly into the listenersStatement string and executed via cursor.execute."
+  }
+]

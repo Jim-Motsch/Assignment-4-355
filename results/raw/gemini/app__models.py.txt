@@ -1,0 +1,10 @@
+[
+  {
+    "file": "app/models.py",
+    "line_start": 29,
+    "line_end": 29,
+    "cwe_id": "CWE-328",
+    "cwe_name": "Use of a Weak Hash Function",
+    "explanation": "User passwords are stored using the weak MD5 hashing algorithm."
+  }
+]

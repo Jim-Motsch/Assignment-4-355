@@ -1,0 +1,82 @@
+[
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 25,
+    "line_end": 32,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User session data and format parameters reach SQL query strings executed via cursor.execute without proper parameterization."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 50,
+    "line_end": 51,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The session username reaches an unparameterized SQL query string via string formatting and is executed against the database."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 75,
+    "line_end": 75,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The session username reaches sqlBlabsByMe via string interpolation and is executed in a database query."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 117,
+    "line_end": 120,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied 'blab' input reaches an INSERT SQL statement via string formatting and is executed against the database."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 161,
+    "line_end": 162,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Request parameters and session username reach SQL queries via string formatting before being executed."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 189,
+    "line_end": 201,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied GET parameter 'blabid' reaches blabDetailsSql via string formatting and is executed in a database query."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 192,
+    "line_end": 211,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied GET parameter 'blabid' reaches blabCommentsSql via string formatting and is executed in a database query."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 250,
+    "line_end": 257,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied POST 'comment' and 'blabid' parameters reach an INSERT SQL statement via string formatting and are executed against the database."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 288,
+    "line_end": 300,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The session username and 'sort' GET parameter reach blabbersSql via string formatting and are executed in a database query."
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 347,
+    "line_end": 348,
+    "cwe_id": "CWE-95",
+    "cwe_name": "Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')",
+    "explanation": "User-supplied POST parameter 'command' is passed directly to the eval() function, allowing arbitrary code execution."
+  }
+]

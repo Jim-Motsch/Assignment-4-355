@@ -3,8 +3,7 @@ import argparse
 from pathlib import Path
 
 from src.models.gemini import GeminiClient
-from src.scanner import scan_repo, save_findings_csv
-
+from src.scanner import scan_repo, save_findings_csv, RESULTS_DIR
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -14,7 +13,8 @@ def main() -> None:
 
     clients = [GeminiClient()]  # add Groq + Claude clients later
     findings = scan_repo(Path(args.repo), clients, limit=args.limit)
-    save_findings_csv(findings)
+    names = "_".join(c.name for c in clients)
+    save_findings_csv(findings, RESULTS_DIR / f"findings_{names}.csv")
     print(f"Saved {len(findings)} findings to results/findings.csv")
 
 

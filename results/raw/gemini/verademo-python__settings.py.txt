@@ -1,0 +1,26 @@
+[
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 27,
+    "line_end": 27,
+    "cwe_id": "CWE-489",
+    "cwe_name": "Active Debug Code",
+    "explanation": "Enabling DEBUG mode in a production configuration exposes sensitive system details and stack traces to users."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 30,
+    "line_end": 30,
+    "cwe_id": "CWE-20",
+    "cwe_name": "Improper Input Validation",
+    "explanation": "Setting ALLOWED_HOSTS to '*' allows any Host header value, leaving the application vulnerable to HTTP Host header attacks and cache poisoning."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 49,
+    "line_end": 49,
+    "cwe_id": "CWE-352",
+    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "explanation": "Commenting out CsrfViewMiddleware disables Django's built-in Cross-Site Request Forgery protection for the application."
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "app/commands/ListenCommand.py",
+    "line_start": 22,
+    "line_end": 22,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted input blabberUsername and self.username reach the database execute method via string formatting."
+  },
+  {
+    "file": "app/commands/ListenCommand.py",
+    "line_start": 26,
+    "line_end": 26,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted input blabberUsername reaches the database execute method via string concatenation."
+  },
+  {
+    "file": "app/commands/ListenCommand.py",
+    "line_start": 32,
+    "line_end": 32,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Untrusted input blabberUsername and self.username reach the database execute method via string concatenation."
+  }
+]

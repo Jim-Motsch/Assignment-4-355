@@ -1,0 +1,130 @@
+[
+  {
+    "file": "app/views/userController.py",
+    "line_start": 69,
+    "line_end": 69,
+    "cwe_id": "CWE-502",
+    "cwe_name": "Deserialization of Untrusted Data",
+    "explanation": "Untrusted user details cookie data reaches pickle.loads() leading to insecure deserialization."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 111,
+    "line_end": 111,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied username and password reach cursor.execute() via string concatenation in an SQL query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 128,
+    "line_end": 128,
+    "cwe_id": "CWE-326",
+    "cwe_name": "Inadequate Encryption Strength",
+    "explanation": "An RSA private key is generated with an inadequate key size of 1024 bits."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 186,
+    "line_end": 186,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied username reaches cursor.execute() via string concatenation in the password hint query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 227,
+    "line_end": 227,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username reaches cursor.execute() via string concatenation in the TOTP secret lookup query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 261,
+    "line_end": 261,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username reaches cursor.execute() via string concatenation in the processTotp query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 342,
+    "line_end": 342,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied username reaches cursor.execute() via string concatenation in the registration check query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 420,
+    "line_end": 420,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Form inputs reach cursor.execute() via string concatenation in the user insertion query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 494,
+    "line_end": 494,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username reaches cursor.execute() via string formatting in the hecklers query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 513,
+    "line_end": 513,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username reaches cursor.execute() via string concatenation in the user history query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 523,
+    "line_end": 523,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username reaches cursor.execute() via string concatenation in the profile information query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 586,
+    "line_end": 586,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Form inputs reach cursor.execute() via string formatting in the profile update query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 633,
+    "line_end": 633,
+    "cwe_id": "CWE-502",
+    "cwe_name": "Deserialization of Untrusted Data",
+    "explanation": "Untrusted cookie data reaches pickle.loads() when updating remember-me details."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 696,
+    "line_end": 696,
+    "cwe_id": "CWE-22",
+    "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "explanation": "User-supplied image parameter reaches open() via path concatenation without proper sanitization."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 733,
+    "line_end": 733,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Username reaches cursor.execute() via string formatting in the usernameExists check query."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 774,
+    "line_end": 774,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Usernames reach cursor.execute() via string formatting in batch update queries for username changes."
+  }
+]
