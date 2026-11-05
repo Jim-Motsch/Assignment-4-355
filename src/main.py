@@ -2,7 +2,7 @@
 import argparse
 from pathlib import Path
 
-from src.models.gemini import GeminiClient
+from src.models.claude import ClaudeClient
 from src.scanner import scan_repo, save_findings_csv, RESULTS_DIR
 
 def main() -> None:
@@ -11,7 +11,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int, help="only scan first N files")
     args = ap.parse_args()
 
-    clients = [GeminiClient()]  # add Groq + Claude clients later
+    clients = [ClaudeClient()]  # add Groq + Claude clients later
     findings = scan_repo(Path(args.repo), clients, limit=args.limit)
     names = "_".join(c.name for c in clients)
     save_findings_csv(findings, RESULTS_DIR / f"findings_{names}.csv")

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "app/models.py",
+    "line_start": 26,
+    "line_end": 29,
+    "cwe_id": "CWE-1391",
+    "cwe_name": "Use of Weak Credentials",
+    "explanation": "A new user's default password is set equal to their username, which is trivially guessable, and the password hint is also set to the username."
+  },
+  {
+    "file": "app/models.py",
+    "line_start": 29,
+    "line_end": 29,
+    "cwe_id": "CWE-328",
+    "cwe_name": "Use of Weak Hash",
+    "explanation": "The password is hashed with unsalted MD5, which is fast and easy to crack with rainbow tables or brute force."
+  },
+  {
+    "file": "app/models.py",
+    "line_start": 16,
+    "line_end": 18,
+    "cwe_id": "CWE-256",
+    "cwe_name": "Plaintext Storage of a Password",
+    "explanation": "The password hint and TOTP secret are stored as plain fields in the database, and the password field is a plain CharField with no secure hashing enforced, so a database leak exposes credentials and 2FA secrets."
+  }
+]

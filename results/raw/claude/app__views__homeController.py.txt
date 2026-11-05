@@ -1,0 +1,12 @@
+The HTTP Host header, which the client controls, is used to build a URL that the server then requests. That makes this server-side request forgery.
+
+[
+  {
+    "file": "app/views/homeController.py",
+    "line_start": 13,
+    "line_end": 16,
+    "cwe_id": "CWE-918",
+    "cwe_name": "Server-Side Request Forgery (SSRF)",
+    "explanation": "The attacker-controlled HTTP_HOST header is used to build a URL that urllib.request.urlopen fetches server-side, so an attacker can make the server send requests to arbitrary hosts."
+  }
+]

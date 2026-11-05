@@ -1,0 +1,58 @@
+[
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 63,
+    "line_end": 63,
+    "cwe_id": "CWE-295",
+    "cwe_name": "Improper Certificate Validation",
+    "explanation": "httplib2.Http is created with disable_ssl_certificate_validation=True, so TLS certificates are not verified and connections can be intercepted."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 64,
+    "line_end": 64,
+    "cwe_id": "CWE-798",
+    "cwe_name": "Use of Hard-coded Credentials",
+    "explanation": "Credentials are hard-coded in the source via h.add_credentials('thiswaskevinsidea','hardcode')."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 97,
+    "line_end": 103,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "SQL INSERT statements are built with Python string formatting (%) from user fields and passed to cursor.execute without parameterization."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 108,
+    "line_end": 116,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The listeners INSERT is built with string formatting of usernames and executed directly rather than using bound parameters."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 57,
+    "line_end": 75,
+    "cwe_id": "CWE-352",
+    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "explanation": "A state-changing POST that flushes the entire database requires only a 'confirm' parameter, with no visible CSRF protection or authentication/authorization check."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 74,
+    "line_end": 88,
+    "cwe_id": "CWE-862",
+    "cwe_name": "Missing Authorization",
+    "explanation": "Any requester can POST to processReset and trigger a destructive database flush and reset to known default users without authentication or authorization."
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 20,
+    "line_end": 53,
+    "cwe_id": "CWE-798",
+    "cwe_name": "Use of Hard-coded Credentials",
+    "explanation": "User accounts, including admin accounts, are created with hard-coded, trivially guessable passwords (e.g., admin/admin) in source code."
+  }
+]

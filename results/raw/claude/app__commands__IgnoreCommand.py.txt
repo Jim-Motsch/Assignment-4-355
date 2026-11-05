@@ -1,0 +1,34 @@
+[
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 22,
+    "line_end": 22,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "blabberUsername and self.username are interpolated into the DELETE statement via string formatting, so an attacker can inject SQL."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 24,
+    "line_end": 26,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "blabberUsername is concatenated directly into the SELECT query and executed without parameterization."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 29,
+    "line_end": 32,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The username, blabberUsername, and a database-derived name are concatenated into the INSERT statement, enabling SQL injection (including second-order injection)."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 34,
+    "line_end": 38,
+    "cwe_id": "CWE-755",
+    "cwe_name": "Improper Handling of Exceptional Conditions",
+    "explanation": "A bare except swallows all errors, and the logger.error call is malformed (extra argument without a format placeholder), so failures are neither handled nor reliably logged."
+  }
+]

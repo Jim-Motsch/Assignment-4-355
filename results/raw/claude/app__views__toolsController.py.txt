@@ -1,0 +1,26 @@
+[
+  {
+    "file": "app/views/toolsController.py",
+    "line_start": 68,
+    "line_end": 68,
+    "cwe_id": "CWE-78",
+    "cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+    "explanation": "The user-controlled 'fortunefile' POST parameter is interpolated into an os.system shell command string (`cat {file}`), allowing shell metacharacters to execute arbitrary commands."
+  },
+  {
+    "file": "app/views/toolsController.py",
+    "line_start": 43,
+    "line_end": 43,
+    "cwe_id": "CWE-88",
+    "cwe_name": "Improper Neutralization of Argument Delimiters in a Command ('Argument Injection')",
+    "explanation": "The user-supplied 'host' POST parameter is passed directly as an argument to the ping command without validation, so a value starting with '-' can be interpreted as an option."
+  },
+  {
+    "file": "app/views/toolsController.py",
+    "line_start": 41,
+    "line_end": 41,
+    "cwe_id": "CWE-117",
+    "cwe_name": "Improper Output Neutralization for Logs",
+    "explanation": "The user-controlled 'host' value is written to the log unsanitized, allowing log forging via CR/LF injection."
+  }
+]
