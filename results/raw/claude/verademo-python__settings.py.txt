@@ -1,0 +1,42 @@
+[
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 24,
+    "line_end": 24,
+    "cwe_id": "CWE-798",
+    "cwe_name": "Use of Hard-coded Credentials",
+    "explanation": "The Django SECRET_KEY is hard-coded in source, so anyone with access to the code can forge signed sessions, cookies and tokens."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 27,
+    "line_end": 27,
+    "cwe_id": "CWE-489",
+    "cwe_name": "Active Debug Code",
+    "explanation": "DEBUG = True exposes detailed error pages with stack traces, settings and environment information to users."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 30,
+    "line_end": 30,
+    "cwe_id": "CWE-183",
+    "cwe_name": "Permissive List of Allowed Inputs",
+    "explanation": "ALLOWED_HOSTS = ['*'] accepts any Host header, which enables host header poisoning attacks."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 49,
+    "line_end": 49,
+    "cwe_id": "CWE-352",
+    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "explanation": "The CsrfViewMiddleware is commented out, so state-changing requests have no CSRF protection."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 46,
+    "line_end": 46,
+    "cwe_id": "CWE-693",
+    "cwe_name": "Protection Mechanism Failure",
+    "explanation": "SecurityMiddleware is disabled, so HSTS, SSL redirect, nosniff and other security headers are not applied."
+  }
+]

@@ -1,0 +1,3 @@
+The admin list view displays the `password` field of `User`, which exposes stored credentials (likely plaintext or hashes) to anyone with admin access.
+
+[{"file":"app/admin.py","line_start":7,"line_end":7,"cwe_id":"CWE-200","cwe_name":"Exposure of Sensitive Information to an Unauthorized Actor","explanation":"UserAdmin.list_display includes the 'password' field, so every user's stored password (or hash) is rendered in the admin changelist for anyone with view access."}]

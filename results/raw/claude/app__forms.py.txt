@@ -1,0 +1,18 @@
+[
+  {
+    "file": "app/forms.py",
+    "line_start": 10,
+    "line_end": 12,
+    "cwe_id": "CWE-549",
+    "cwe_name": "Missing Password Field Masking",
+    "explanation": "The ModelForm exposes the 'password' model field with the default text input widget instead of PasswordInput, so the password is shown in clear text as the user types it."
+  },
+  {
+    "file": "app/forms.py",
+    "line_start": 15,
+    "line_end": 16,
+    "cwe_id": "CWE-549",
+    "cwe_name": "Missing Password Field Masking",
+    "explanation": "The password and cpassword fields are plain CharFields with no PasswordInput widget, so the entered passwords are displayed unmasked and can be shoulder-surfed."
+  }
+]
