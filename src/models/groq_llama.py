@@ -1,21 +1,35 @@
+"""Groq client (open models hosted on the Groq API)."""
+import os
+
+from dotenv import load_dotenv
 from groq import Groq
 
-client = Groq()
-completion = client.chat.completions.create(
-    model="openai/gpt-oss-120b",
-    messages=[
-      {
-        "role": "user",
-        "content": ""
-      }
-    ],
-    temperature=1,
-    max_completion_tokens=2048,
-    top_p=1,
-    reasoning_effort="medium",
-    stream=True,
-    stop=None
-)
+from src.models.base import LLMClient
 
-for chunk in completion:
-    print(chunk.choices[0].delta.content or "", end="")
+load_dotenv()
+
+
+class GroqClient(LLMClient):
+    """Sends prompts to a model on Groq and returns the text reply."""
+
+    name = "groq"
+    max_lines = 250  # free tier: 8k tokens/minute
+
+    def __init__(self, model: str = "openai/gpt-oss-120b"):
+        self.model = model
+        self.client = Groq(api_key=os.environ["GROQ_API_KEY"])
+
+    def send(self, system_prompt: str, user_prompt: str) -> str:
+        response = self.client.chat.completions.create(
+            model=self.model,
+            temperature=0,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+        )
+        return response.choices[0].message.content
+
+
+if __name__ == "__main__":
+    print(GroqClient().send("Reply in one short sentence.", "Say hello."))

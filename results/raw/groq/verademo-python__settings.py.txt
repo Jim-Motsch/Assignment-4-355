@@ -1,0 +1,50 @@
+[
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 24,
+    "line_end": 24,
+    "cwe_id": "CWE-321",
+    "cwe_name": "Use of Hard-coded Cryptographic Key",
+    "explanation": "The Django SECRET_KEY is hard‑coded in source code, exposing the cryptographic signing secret."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 27,
+    "line_end": 27,
+    "cwe_id": "CWE-215",
+    "cwe_name": "Information Exposure Through Debug Information",
+    "explanation": "DEBUG is set to True, which can leak stack traces and configuration details in a production environment."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 30,
+    "line_end": 30,
+    "cwe_id": "CWE-20",
+    "cwe_name": "Improper Input Validation",
+    "explanation": "ALLOWED_HOSTS is set to ['*'], allowing any host header and enabling host‑header attacks."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 49,
+    "line_end": 49,
+    "cwe_id": "CWE-352",
+    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "explanation": "The CSRF middleware is commented out, disabling CSRF protection for the application."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 46,
+    "line_end": 46,
+    "cwe_id": "CWE-693",
+    "cwe_name": "Protection Mechanism Failure",
+    "explanation": "The SecurityMiddleware is commented out, removing built‑in security headers and protections."
+  },
+  {
+    "file": "verademo-python/settings.py",
+    "line_start": 149,
+    "line_end": 152,
+    "cwe_id": "CWE-532",
+    "cwe_name": "Information Exposure Through Log Files",
+    "explanation": "Logging is configured at DEBUG level to the console, potentially exposing sensitive information in logs."
+  }
+]

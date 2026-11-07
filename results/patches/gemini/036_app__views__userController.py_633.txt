@@ -1,0 +1,8 @@
+        # Update remember me functionality
+        userDetailsCookie = request.COOKIES.get('user')
+        if userDetailsCookie is not None:
+            decoded = base64.b64decode(userDetailsCookie)
+            unencodedUserDetails = json.loads(decoded.decode('utf-8'))
+            # unencodedUserDetails = pickle.loads(base64.b64decode(userDetailsCookie))
+            unencodedUserDetails.username = username
+            response = updateInResponse(unencodedUserDetails, response)

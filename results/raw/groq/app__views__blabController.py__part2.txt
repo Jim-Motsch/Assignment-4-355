@@ -1,0 +1,34 @@
+[
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 257,
+    "line_end": 257,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-controlled blabid, username, or comment are interpolated into addCommentSql via % formatting and executed with cursor.execute"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 292,
+    "line_end": 292,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The 'sort' GET parameter is concatenated directly into the ORDER BY clause of blabbersSql, allowing SQL injection"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 300,
+    "line_end": 300,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The username from the session is inserted into blabbersSql via % formatting and executed with cursor.execute"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 348,
+    "line_end": 348,
+    "cwe_id": "CWE-94",
+    "cwe_name": "Improper Control of Generation of Code ('Code Injection')",
+    "explanation": "The 'command' POST parameter is transformed into a module name and passed to eval(), allowing execution of arbitrary code"
+  }
+]

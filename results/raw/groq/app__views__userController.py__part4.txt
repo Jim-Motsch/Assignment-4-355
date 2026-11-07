@@ -1,0 +1,18 @@
+[
+  {
+    "file": "app/views/userController.py",
+    "line_start": 774,
+    "line_end": 774,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-controlled newUsername and oldUsername are interpolated into SQL strings and passed to cursor.execute, allowing injection."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 787,
+    "line_end": 787,
+    "cwe_id": "CWE-22",
+    "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "explanation": "The newUsername is concatenated into a filesystem path and used in os.rename, enabling path traversal or arbitrary file rename."
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 19,
+    "line_end": 22,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-controlled blabberUsername is interpolated into a DELETE statement via string formatting, allowing SQL injection."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 24,
+    "line_end": 27,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "blabberUsername is concatenated directly into a SELECT query, enabling SQL injection."
+  },
+  {
+    "file": "app/commands/IgnoreCommand.py",
+    "line_start": 29,
+    "line_end": 32,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "self.username and event (which includes blabberUsername) are concatenated into an INSERT statement, creating a SQL injection risk."
+  }
+]

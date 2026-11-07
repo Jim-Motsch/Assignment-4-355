@@ -1,0 +1,34 @@
+[
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 63,
+    "line_end": 63,
+    "cwe_id": "CWE-295",
+    "cwe_name": "Improper Certificate Validation",
+    "explanation": "disable_ssl_certificate_validation=True disables TLS certificate validation for HTTP requests"
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 64,
+    "line_end": 64,
+    "cwe_id": "CWE-798",
+    "cwe_name": "Use of Hard-coded Credentials",
+    "explanation": "Hard-coded username and password are added to the HTTP client via add_credentials"
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 102,
+    "line_end": 102,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User data is interpolated into an SQL INSERT statement using string formatting before cursor.execute"
+  },
+  {
+    "file": "app/views/resetController.py",
+    "line_start": 116,
+    "line_end": 116,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Listener usernames are interpolated into an SQL INSERT statement using string formatting before cursor.execute"
+  }
+]

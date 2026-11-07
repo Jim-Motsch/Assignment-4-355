@@ -1,0 +1,1 @@
+[{"file":"app/views/homeController.py","line_start":13,"line_end":16,"cwe_id":"CWE-918","cwe_name":"Server Side Request Forgery (SSRF)","explanation":"The HTTP_HOST header value is concatenated into a URL passed to urllib.request.urlopen, allowing attacker-controlled input to dictate the destination of a server-side request."}]

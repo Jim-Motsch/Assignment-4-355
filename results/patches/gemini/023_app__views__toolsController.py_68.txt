@@ -1,0 +1,2 @@
+    else:
+        subprocess.run(['cat', file], check=True)

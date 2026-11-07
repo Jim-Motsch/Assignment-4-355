@@ -1,0 +1,114 @@
+[
+  {
+    "file": "app/views/userController.py",
+    "line_start": 56,
+    "line_end": 58,
+    "cwe_id": "CWE-532",
+    "cwe_name": "Information Exposure Through Log Files",
+    "explanation": "User-supplied username and target are concatenated into log messages, exposing them in server logs."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 103,
+    "line_end": 105,
+    "cwe_id": "CWE-89",
+    "cwe_name": "SQL Injection",
+    "explanation": "Username and password are directly concatenated into an SQL query string."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 109,
+    "line_end": 109,
+    "cwe_id": "CWE-532",
+    "cwe_name": "Information Exposure Through Log Files",
+    "explanation": "Parsed SQL token containing the password hash is logged, leaking credential data."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 125,
+    "line_end": 125,
+    "cwe_id": "CWE-532",
+    "cwe_name": "Information Exposure Through Log Files",
+    "explanation": "Full user record is logged, exposing sensitive user information."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 127,
+    "line_end": 128,
+    "cwe_id": "CWE-326",
+    "cwe_name": "Inadequate Encryption Strength",
+    "explanation": "RSA private key is generated with a 1024‑bit key size, which is considered weak."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 129,
+    "line_end": 129,
+    "cwe_id": "CWE-312",
+    "cwe_name": "Sensitive Information Exposure",
+    "explanation": "The generated RSA private key is stored directly in a cookie, exposing secret material to the client."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 138,
+    "line_end": 140,
+    "cwe_id": "CWE-89",
+    "cwe_name": "SQL Injection",
+    "explanation": "Username from the database row is concatenated into an UPDATE statement without sanitization."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 154,
+    "line_end": 154,
+    "cwe_id": "CWE-79",
+    "cwe_name": "Cross-site Scripting (XSS)",
+    "explanation": "The supplied username is reflected in an error message sent back to the client."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 184,
+    "line_end": 184,
+    "cwe_id": "CWE-89",
+    "cwe_name": "SQL Injection",
+    "explanation": "Username from request parameters is concatenated into a SELECT query for password hints."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 225,
+    "line_end": 225,
+    "cwe_id": "CWE-89",
+    "cwe_name": "SQL Injection",
+    "explanation": "Username from session is concatenated into a SELECT query for the TOTP secret."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 69,
+    "line_end": 69,
+    "cwe_id": "CWE-502",
+    "cwe_name": "Deserialization of Untrusted Data",
+    "explanation": "Cookie data is base64‑decoded and deserialized with pickle without validation."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 42,
+    "line_end": 45,
+    "cwe_id": "CWE-601",
+    "cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "explanation": "The 'target' GET parameter is used directly in a redirect without validation."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 91,
+    "line_end": 96,
+    "cwe_id": "CWE-601",
+    "cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+    "explanation": "The 'target' POST parameter is used directly in a redirect without validation."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 71,
+    "line_end": 71,
+    "cwe_id": "CWE-532",
+    "cwe_name": "Information Exposure Through Log Files",
+    "explanation": "Username extracted from a deserialized cookie is logged, revealing user identity."
+  }
+]

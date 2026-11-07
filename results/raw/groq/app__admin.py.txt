@@ -1,0 +1,1 @@
+[{"file":"app/admin.py","line_start":7,"line_end":7,"cwe_id":"CWE-200","cwe_name":"Information Exposure","explanation":"The UserAdmin list_display includes the password field, causing credential hashes to be shown in the admin interface."}]

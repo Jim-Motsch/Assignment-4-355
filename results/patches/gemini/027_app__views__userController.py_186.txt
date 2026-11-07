@@ -1,0 +1,10 @@
+    try:
+        logger.info("Creating the Database connection")
+        with connection.cursor() as cursor:
+            sql = "SELECT password_hint FROM users WHERE username = %s"
+            logger.info("Executing password hint query for user")
+            cursor.execute(sql, [username])
+            row = cursor.fetchone()
+            
+            if (row):
+                password = row[0]

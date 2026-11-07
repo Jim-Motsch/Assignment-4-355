@@ -1,0 +1,4 @@
+                logger.info("Executing query to get all 'Blabs for me'")
+                blabsForMe = sqlBlabsForMe
+                cursor.execute(blabsForMe, [10, 0, username])
+                blabsForMeResults = cursor.fetchall()

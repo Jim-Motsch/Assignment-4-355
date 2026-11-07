@@ -1,0 +1,4 @@
+        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True) #CWE-295
+        h.add_credentials(settings.HTTP_CLIENT_USER, settings.HTTP_CLIENT_PASSWORD)
+        data=h.request("http://localhost/",method='GET')
+        return data

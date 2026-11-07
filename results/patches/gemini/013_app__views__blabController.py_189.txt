@@ -1,0 +1,18 @@
+        blabDetailsSql = ("SELECT blabs.content, users.blab_name "
+                "FROM blabs INNER JOIN users ON blabs.blabber = users.username WHERE blabs.blabid = %s;")
+
+        blabCommentsSql = ("SELECT users.username, users.blab_name, comments.content, comments.timestamp "
+                "FROM comments INNER JOIN users ON comments.blabber = users.username "
+                "WHERE comments.blabid = %s ORDER BY comments.timestamp DESC;")
+        
+        try :
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:
+
+                logger.info("Executing query to see Blab details")
+                cursor.execute(blabDetailsSql, [blabid])
+                blabDetailsResults = cursor.fetchone()
+
+                if (blabDetailsResults):
+                    request.content = blabDetailsResults[0]
+                    request.blab_name = blabDetailsResults[1]

@@ -1,0 +1,20 @@
+        logger.info("command = " + command)
+
+        try:
+            logger.info("Creating database connection")
+            with connection.cursor() as cursor:
+                module = command.capitalize()[:-1] + "Command"
+                allowed_commands = {
+                    "PostCommand": PostCommand,
+                    "LikeCommand": LikeCommand,
+                    "FollowCommand": FollowCommand,
+                    "UnfollowCommand": UnfollowCommand
+                }
+                cmdClass = allowed_commands.get(module)
+                if not cmdClass:
+                    raise ValueError("Invalid command")
+                cmdObj = cmdClass(cursor, username)
+                cmdObj.execute(blabberUsername)
+                return redirect('blabbers')       
+        except ConnectionError as ce:
+            logger.error("Unexpected connection error", ce)

@@ -1,0 +1,50 @@
+[
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 51,
+    "line_end": 51,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-controlled session username is interpolated into SQL query via string formatting and executed with cursor.execute"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 75,
+    "line_end": 75,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "Session username is inserted into SQL query using % formatting and executed, allowing injection"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 120,
+    "line_end": 120,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "POST parameter 'blab' and session username are directly interpolated into INSERT statement via % formatting and executed"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 201,
+    "line_end": 201,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "GET parameter 'blabid' is interpolated into SELECT query using % formatting and executed"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 211,
+    "line_end": 211,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "GET parameter 'blabid' is interpolated into SELECT query for comments using % formatting and executed"
+  },
+  {
+    "file": "app/views/blabController.py",
+    "line_start": 166,
+    "line_end": 167,
+    "cwe_id": "CWE-79",
+    "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "explanation": "Database-supplied content, username, and other fields are inserted into HTML template via .format without escaping, leading to reflected/stored XSS"
+  }
+]

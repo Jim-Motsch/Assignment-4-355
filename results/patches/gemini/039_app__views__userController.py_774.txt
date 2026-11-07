@@ -1,0 +1,6 @@
+                    "UPDATE users_history SET blabber=%s WHERE blabber=%s" ]
+        
+                # Execute updates as part of a batch transaction
+                # This will roll back all changes if one query fails
+                for query in sqlStrQueries:
+                    cursor.execute(query, (newUsername, oldUsername))

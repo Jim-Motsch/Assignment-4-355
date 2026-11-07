@@ -1,0 +1,10 @@
+        with connection.cursor() as cursor:
+        
+            sql = "SELECT totp_secret FROM users WHERE username = %s"
+            logger.info("Executing TOTP query for user")
+            cursor.execute(sql, [username])
+
+            result = cursor.fetchone()
+            if result:
+                columns = [col[0] for col in cursor.description]
+                result = dict(zip(columns, result))

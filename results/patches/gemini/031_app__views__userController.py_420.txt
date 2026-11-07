@@ -1,0 +1,10 @@
+                query += ("datetime('now'),")
+                query += ("%s," * 2)[:-1]
+                query += (");")
+                #execute query
+                cursor.execute(query, (realName, blabName))
+                sqlStatement = cursor.fetchone() #<- variable for response
+                logger.info(query)
+                # END EXAMPLE VULNERABILITY
+        except IntegrityError as ie:
+            logger.error("Integrity error", ie)

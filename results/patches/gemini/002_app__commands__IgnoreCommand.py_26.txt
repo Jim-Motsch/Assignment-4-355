@@ -1,0 +1,12 @@
+        try :
+            self.cursor.execute("SELECT blab_name FROM users WHERE username = %s", (blabberUsername,))
+            result = self.cursor.fetchone()
+
+            sqlQuery = "SELECT blab_name FROM users WHERE username = '" + blabberUsername + "'"
+            self.logger.info(sqlQuery)
+            self.cursor.execute(sqlQuery)
+            result = self.cursor.fetchone()
+
+            event = self.username + " is now ignoring " + blabberUsername + " (" + result[0] + ")"
+            sqlQuery = "INSERT INTO users_history (blabber, event) VALUES (\"" + self.username + "\", \"" + event + "\")"
+            self.logger.info(sqlQuery)

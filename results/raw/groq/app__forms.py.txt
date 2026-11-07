@@ -1,0 +1,1 @@
+[{"file":"app/forms.py","line_start":15,"line_end":16,"cwe_id":"CWE-522","cwe_name":"Insufficiently Protected Credentials","explanation":"The password and cpassword fields are defined as CharField without using a PasswordInput widget, causing them to be rendered as plain‑text inputs that expose credentials."}]

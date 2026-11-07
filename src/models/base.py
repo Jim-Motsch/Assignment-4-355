@@ -10,7 +10,7 @@ class LLMClient(ABC):
     """
 
     name: str = "base"
-
+    max_lines: int | None = None  # split files longer than this; None = never
     @abstractmethod
     def send(self, system_prompt: str, user_prompt: str) -> str:
         """Send prompts to the model and return its raw text reply."""

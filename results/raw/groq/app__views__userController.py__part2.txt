@@ -1,0 +1,66 @@
+[
+  {
+    "file": "app/views/userController.py",
+    "line_start": 259,
+    "line_end": 262,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The variable 'username' is concatenated into the SELECT statement without sanitization, allowing SQL injection."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 341,
+    "line_end": 344,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The 'username' value from the request is directly concatenated into a SELECT query, creating a SQL injection vector."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 410,
+    "line_end": 420,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User‑controlled fields (username, password, realName, blabName) are concatenated into an INSERT statement without proper escaping."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 494,
+    "line_end": 495,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The 'username' from the session is interpolated into the SQL query using string formatting, enabling injection."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 315,
+    "line_end": 316,
+    "cwe_id": "CWE-352",
+    "cwe_name": "Cross-Site Request Forgery (CSRF)",
+    "explanation": "The @csrf_exempt decorator disables CSRF protection on the register view, allowing forged requests."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 413,
+    "line_end": 413,
+    "cwe_id": "CWE-256",
+    "cwe_name": "Plaintext Storage of a Password",
+    "explanation": "The raw password is inserted into the database in the 'password' column, storing it in plaintext."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 412,
+    "line_end": 412,
+    "cwe_id": "CWE-327",
+    "cwe_name": "Use of a Broken or Risky Cryptographic Algorithm",
+    "explanation": "Passwords are hashed with MD5, a weak and broken hashing algorithm."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 449,
+    "line_end": 452,
+    "cwe_id": "CWE-444",
+    "cwe_name": "Improper Input Validation for Email Header Injection",
+    "explanation": "The 'username' is inserted directly into the email Subject header without validation, enabling email header injection."
+  }
+]

@@ -1,0 +1,5 @@
+        with connection.cursor() as cursor:
+            sqlQuery = "SELECT username FROM users WHERE username = %s"
+            cursor.execute(sqlQuery, [username])
+            row = cursor.fetchone()
+            if (row):

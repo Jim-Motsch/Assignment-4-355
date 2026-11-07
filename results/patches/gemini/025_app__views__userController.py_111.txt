@@ -1,0 +1,8 @@
+                sqlQuery = "select username, password, password_hint, created_at, last_login, real_name, blab_name from users where username=:username and password=:password;"
+                logger.info(sqlQuery)
+
+                parsed = sqlparse.parse(sqlQuery)[0]
+                logger.info("Attempted login with username and password: " + parsed[8].value)
+
+                cursor.execute(sqlQuery, {"username": username, "password": password})
+                # END VULN CODE

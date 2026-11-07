@@ -1,0 +1,12 @@
+def home(request):
+    # Equivalent of HomeController.java
+    if request.session.get('username'):
+        # START BAD CODE
+        try:
+            redir = urllib.request.Request('http://127.0.0.1:' + request.META['SERVER_PORT'] + '/feed')
+            urllib.request.urlopen(redir, timeout=5)
+        # END BAD CODE
+        except: 
+            # GOOD CODE:
+            print("redir")
+            return redirect('feed')

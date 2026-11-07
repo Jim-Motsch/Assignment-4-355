@@ -26,7 +26,7 @@ def number_lines(code: str) -> str:
 
 
 def send_with_retry(client: LLMClient, system: str, user: str,
-                    attempts: int = 4) -> str:
+                    attempts: int = 5) -> str:
     """Retry with growing waits when the API is busy (e.g. 503)."""
     for attempt in range(attempts):
         try:
@@ -41,7 +41,11 @@ def send_with_retry(client: LLMClient, system: str, user: str,
 
 def scan_repo(repo_root: Path, clients: list[LLMClient],
               limit: int | None = None) -> list[dict]:
-    """Send every source file to every model; save raw replies."""
+    """Send every source file to every model; save raw replies.
+
+    Files longer than a client's max_lines are sent in numbered chunks,
+    and a file that keeps failing is logged and skipped, not fatal.
+    """
     system_prompt = PROMPT_PATH.read_text(encoding="utf-8")
     files = find_source_files(repo_root)[:limit]
     findings = []
@@ -51,12 +55,23 @@ def scan_repo(repo_root: Path, clients: list[LLMClient],
         for path in files:
             rel = path.relative_to(repo_root).as_posix()
             code = path.read_text(encoding="utf-8", errors="replace")
-            print(f"[{client.name}] scanning {rel}")
-            raw = send_with_retry(client, system_prompt,
-                                  f"File: {rel}\n\n{number_lines(code)}")
-            (raw_dir / (rel.replace("/", "__") + ".txt")).write_text(
-                raw, encoding="utf-8")
-            findings.extend(parse_findings(raw, client.name, rel))
+            lines = number_lines(code).splitlines()
+            size = client.max_lines or max(len(lines), 1)
+            chunks = [lines[i:i + size]
+                      for i in range(0, len(lines), size)] or [[]]
+            for n, chunk in enumerate(chunks, 1):
+                part = f" (part {n}/{len(chunks)})" if len(chunks) > 1 else ""
+                print(f"[{client.name}] scanning {rel}{part}")
+                user_prompt = f"File: {rel}{part}\n\n" + "\n".join(chunk)
+                try:
+                    raw = send_with_retry(client, system_prompt, user_prompt)
+                except Exception as e:
+                    print(f"  ERROR: {client.name} failed on {rel}{part}: {e}")
+                    continue
+                suffix = f"__part{n}" if len(chunks) > 1 else ""
+                name = rel.replace("/", "__") + suffix + ".txt"
+                (raw_dir / name).write_text(raw, encoding="utf-8")
+                findings.extend(parse_findings(raw, client.name, rel))
     return findings
 
 

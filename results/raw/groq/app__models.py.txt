@@ -1,0 +1,1 @@
+[{"file":"app/models.py","line_start":26,"line_end":29,"cwe_id":"CWE-327","cwe_name":"Use of a Broken Cryptographic Algorithm","explanation":"The create function uses the supplied username as the password and hashes it with MD5, a weak algorithm, resulting in insecure password storage."}]

@@ -1,0 +1,9 @@
+    f = image_dir
+    path = os.path.abspath(os.path.join(f, imageName))
+    if not path.startswith(os.path.abspath(f) + os.sep):
+        return HttpResponseForbidden("Invalid image path")
+
+    logger.info("Fetching profile image: " + path)
+
+    try:
+        if os.path.exists(path):

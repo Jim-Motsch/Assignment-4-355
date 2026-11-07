@@ -1,0 +1,58 @@
+[
+  {
+    "file": "app/views/userController.py",
+    "line_start": 511,
+    "line_end": 511,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The variable 'username' is concatenated into the SQL query string and executed without sanitization."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 521,
+    "line_end": 521,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "The variable 'username' is concatenated into the SELECT statement and executed directly."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 586,
+    "line_end": 586,
+    "cwe_id": "CWE-89",
+    "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+    "explanation": "User-supplied 'realName', 'blabName', and 'sessionUsername' are interpolated into an UPDATE statement via string formatting."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 559,
+    "line_end": 559,
+    "cwe_id": "CWE-79",
+    "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+    "explanation": "User-controlled 'username', 'realName', and 'blabName' are embedded in a script tag that is returned in a JSON response."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 634,
+    "line_end": 634,
+    "cwe_id": "CWE-502",
+    "cwe_name": "Deserialization of Untrusted Data",
+    "explanation": "A base64-decoded cookie value is deserialized with pickle.loads without validation."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 696,
+    "line_end": 696,
+    "cwe_id": "CWE-22",
+    "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+    "explanation": "The 'image' parameter from the request query string is concatenated to a filesystem path and opened without validation."
+  },
+  {
+    "file": "app/views/userController.py",
+    "line_start": 652,
+    "line_end": 652,
+    "cwe_id": "CWE-434",
+    "cwe_name": "Unrestricted Upload of File with Dangerous Type",
+    "explanation": "File upload only checks the filename extension via endswith('.png') and writes the file to disk, allowing malicious content."
+  }
+]

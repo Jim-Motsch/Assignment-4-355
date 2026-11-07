@@ -1,0 +1,11 @@
+                request.currentUser = username
+
+                # Find the Blabs by this user
+
+                logger.info("Executing query to get all of user's Blabs")
+                cursor.execute(sqlBlabsByMe, (username,))
+                blabsByMeResults = cursor.fetchall()
+
+                myBlabs = []
+                for blab in blabsByMeResults:
+                    post = Blab()
