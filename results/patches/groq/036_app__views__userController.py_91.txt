@@ -1,0 +1,16 @@
+        remember = request.POST.get('remember')
+        target = request.POST.get('target')
+
+        logger.info("Attempting login with username: " + username + " and target: " + target)
+
+        # Validate the target to prevent open redirects
+        if target and target.lower() != "null" and url_has_allowed_host_and_scheme(url=target, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
+            nextView = target
+        else:
+            nextView = 'feed'
+        response = redirect(nextView)
+
+        try:
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:
+                logger.info("Creating database query")

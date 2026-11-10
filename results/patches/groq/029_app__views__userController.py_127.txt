@@ -1,0 +1,12 @@
+                if (row):
+                    columns = [col[0] for col in cursor.description]
+                    row = dict(zip(columns, row))
+                    logger.info("User found" + str(row)) # CWE-117
+                    response.set_cookie('username', username)
+                    private_key = rsa.generate_private_key(
+                        public_exponent=65537, key_size=2048,) # Fixed: stronger key size
+                    response.set_cookie('password', private_key)
+
+                    if (not remember is None):
+                        currentUser = User(username=row["username"],
+                                    password_hint=row["password_hint"], created_at=row["created_at"],

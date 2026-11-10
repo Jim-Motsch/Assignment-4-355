@@ -1,0 +1,9 @@
+        fields = [
+            'username','password','blab_name','real_name'
+        ]
+
+class RegisterForm(forms.Form):
+    password = forms.CharField(max_length=100, widget=forms.PasswordInput)
+    cpassword = forms.CharField(max_length=100, widget=forms.PasswordInput)
+    blabName = forms.CharField(max_length=100)
+    realName = forms.CharField(max_length=100)

@@ -1,0 +1,8 @@
+                sqlQuery = "SELECT real_name, blab_name FROM users WHERE username=%s AND password=%s"
+                sqlParams = (username, hashlib.md5(password.encode('utf-8')).hexdigest())
+                logger.info(f"Attempted login for username: {username}")
+
+                cursor.execute(sqlQuery, sqlParams)
+                # END VULN CODE
+                # GOOD CODE
+                # sqlQuery = "select username, password, password_hint, created_at, last_login, \

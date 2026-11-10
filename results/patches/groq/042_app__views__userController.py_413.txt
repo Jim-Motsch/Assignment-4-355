@@ -1,0 +1,11 @@
+                #create query
+                query = ''
+                query += "insert into users (username, password, password_hint, totp_secret, created_at, real_name, blab_name) values("
+                query += ("'" + username + "',")
+                query += ("'" + make_password(password) + "',")
+                query += ("'',")
+                query += ("'" + pyotp.random_base32() + "',")
+                query += ("datetime('now'),")
+                query += ("'" + realName + "',")
+                query += ("'" + blabName + "'")
+                query += (");")

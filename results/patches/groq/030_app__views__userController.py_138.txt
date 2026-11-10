@@ -1,0 +1,13 @@
+                                    password_hint=row["password_hint"], created_at=row["created_at"],
+                                    last_login=row["last_login"], real_name=row["real_name"], 
+                                    blab_name=row["blab_name"])
+                        response = updateInResponse(currentUser, response)
+
+                    update = "UPDATE users SET last_login=datetime('now') WHERE username=?;"
+                    cursor.execute(update, (row['username'],))
+
+                    # if the username ends with "totp", add the TOTP login step
+                    if username[-4:].lower() == "totp":
+                        logger.info("User " + username + " has TOTP enabled")
+                        request.session['totp_username'] = row['username']
+                        response = redirect('totp')

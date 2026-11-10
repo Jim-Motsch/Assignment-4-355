@@ -1,0 +1,14 @@
+def home(request):
+    # Equivalent of HomeController.java
+    if request.session.get('username'):
+        # START FIXED CODE
+        try:
+            host_ip = request.META.get('SERVER_NAME', 'localhost')
+            print("da")
+            redir = urllib.request.Request(f'http://{host_ip}:{request.META.get("SERVER_PORT", "80")}/feed')
+            urllib.request.urlopen(redir, timeout=5)
+        # END FIXED CODE
+        except: 
+            # GOOD CODE:
+            print("redir")
+            return redirect('feed')

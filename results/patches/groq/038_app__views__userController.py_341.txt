@@ -1,0 +1,13 @@
+    # Get the Database Connection
+    logger.info("Creating the Database connection")
+    try:
+        with connection.cursor() as cursor:
+            sqlQuery = "SELECT username FROM users WHERE username = %s"
+            cursor.execute(sqlQuery, [username])
+            row = cursor.fetchone()
+            if (row):
+                request.error = "Username '" + username + "' already exists!"
+                return render(request, 'app/register.html')
+            else:
+                rand_pass = passeo().generate(10, numbers=True, symbols=True)
+                sk = SigningKey.generate()

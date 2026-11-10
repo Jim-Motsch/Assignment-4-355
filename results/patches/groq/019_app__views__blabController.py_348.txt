@@ -1,0 +1,13 @@
+        try:
+            logger.info("Creating database connection")
+            with connection.cursor() as cursor:
+                import sys
+                module = command.capitalize()[:-1] + "Command"
+                cmdClass = getattr(sys.modules[__name__], module, None)
+                if cmdClass is None:
+                    raise ValueError("Invalid command")
+                cmdObj = cmdClass(cursor, username)
+                cmdObj.execute(blabberUsername)
+                return redirect('blabbers')       
+        except ConnectionError as ce:
+            logger.error("Unexpected connection error", ce)

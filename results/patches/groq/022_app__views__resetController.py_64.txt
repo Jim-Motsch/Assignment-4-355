@@ -1,0 +1,11 @@
+        return showReset(request)
+    elif(request.method == "POST"):
+        return processReset(request)
+    else:
+        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True) #CWE-295
+        username = os.getenv('RESET_HTTP_USERNAME')
+        password = os.getenv('RESET_HTTP_PASSWORD')
+        if username and password:
+            h.add_credentials(username, password)
+        data = h.request("http://localhost/", method='GET')
+        return data

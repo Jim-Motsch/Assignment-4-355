@@ -1,0 +1,7 @@
+                usersStatement = "INSERT INTO users (username, password, password_hint, totp_secret, created_at, last_login, real_name, blab_name) values (%s, %s, %s, %s, %s, %s, %s, %s);"
+                if users[0].password == "21232f297a57a5a743894a0e4a801fc3":
+                    logger.info("Encryption successful!")
+                for user in users:
+                    logger.info("Adding user " + user.username)
+                    cursor.execute(usersStatement, (user.username, user.password, user.password_hint, user.totp_secret, user.created_at,
+                                                     user.last_login, user.real_name, user.blab_name))

@@ -1,0 +1,11 @@
+        logger.info("Getting Database connection")
+        with connection.cursor() as cursor:    
+            # Find the Blabbers that this user listens to
+            logger.info(sqlMyHecklers)
+            cursor.execute(sqlMyHecklers, [username])
+            myHecklersResults = cursor.fetchall()
+            hecklers=[]
+            for i in myHecklersResults:
+                
+                heckler = Blabber()
+                heckler.setUsername(i[0])

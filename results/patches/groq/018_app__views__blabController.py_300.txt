@@ -1,0 +1,11 @@
+            logger.info("Creating database connection")
+            with connection.cursor() as cursor:
+
+                logger.info(blabbersSql)
+                logger.info("Executing query to see Blab details")
+                cursor.execute(blabbersSql, [username, username])
+                blabbersResults = cursor.fetchall()
+
+                blabbers = []
+                for b in blabbersResults:
+                    blabber = Blabber()

@@ -1,0 +1,16 @@
+        if oldImage:
+            os.remove(os.path.join(imageDir, oldImage))
+        
+        try:
+            # Validate that uploaded file is a PNG image
+            file.seek(0)
+            import imghdr
+            file_type = imghdr.what(file)
+            if file_type == 'png':
+                safe_path = os.path.join(imageDir, f"{username}.png")
+                with open(safe_path, 'wb') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+            else:
+                response = JsonResponse({'message': "File must be a PNG image."}, status=422)
+                return response

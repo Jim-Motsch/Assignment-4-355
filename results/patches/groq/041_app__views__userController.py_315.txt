@@ -1,0 +1,11 @@
+    logger.info("Redirecting to login...")
+    return response
+
+# csrf_exempt prevents form from requiring csrf token on submission
+# transfers register request to appropriate handler
+@csrf_protect
+def register(request):
+    if(request.method == "GET"):
+        return showRegister(request)
+    elif(request.method == "POST"):
+        return processRegister(request)

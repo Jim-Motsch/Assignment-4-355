@@ -1,0 +1,14 @@
+        logger.info("User is not Logged In - redirecting...")
+        return redirect('/login?target=profile')
+    logger.info("User is Logged In - continuing... UA=" + request.headers["User-Agent"] + " U=" + username)
+
+    f = image_dir
+    path = os.path.abspath(os.path.join(f, imageName))
+    if not path.startswith(os.path.abspath(f) + os.sep):
+        logger.warning(f"Path traversal attempt detected: {imageName}")
+        raise Http404("Image not found")
+
+    logger.info("Fetching profile image: " + path)
+
+    try:
+        if os.path.exists(path):

@@ -1,0 +1,14 @@
+        # Update remember me functionality
+        userDetailsCookie = request.COOKIES.get('user')
+        if userDetailsCookie is not None:
+            decoded = base64.b64decode(userDetailsCookie)
+            try:
+                data = json.loads(decoded.decode('utf-8'))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                data = {}
+            unencodedUserDetails = types.SimpleNamespace(**data)
+            unencodedUserDetails.username = username
+            response = updateInResponse(unencodedUserDetails, response)
+        
+
+        # Update user profile image

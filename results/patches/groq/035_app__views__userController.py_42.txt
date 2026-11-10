@@ -1,0 +1,18 @@
+        target = request.GET.get('target')
+        username = request.GET.get('username')
+
+        if request.session.get('username'):
+            logger.info("User is already logged in - redirecting...")
+            if target and target != "null" and url_has_allowed_host_and_scheme(
+                url=target,
+                allowed_hosts={request.get_host()},
+                require_https=request.is_secure()
+            ):
+                return redirect(target)
+            else:
+                return redirect('feed')
+
+        userDetailsCookie = request.COOKIES.get('user')
+        if userDetailsCookie is None or not userDetailsCookie:
+            logger.info("No user cookie")
+            userDetailsCookie = None

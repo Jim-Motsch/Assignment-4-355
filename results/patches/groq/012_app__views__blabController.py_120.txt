@@ -1,0 +1,10 @@
+                logger.info("Creating query to add new Blab")
+                addBlabSql = "INSERT INTO blabs (blabber, content, timestamp) values (?, ?, datetime('now'));"
+
+                logger.info("Executing query to add new blab")
+                cursor.execute(addBlabSql, (username, blab))
+
+                if not cursor.rowcount:
+                    request.error = "Failed to add blab"
+
+        except ConnectionError as ce:

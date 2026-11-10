@@ -1,0 +1,14 @@
+        self.cursor = cursor
+        self.username = username
+
+    @override
+    def execute(self, blabberUsername):
+        sqlQuery = "DELETE FROM listeners WHERE blabber=%s AND listener=%s;"
+        self.logger.info(sqlQuery)
+        try :
+            self.cursor.execute(sqlQuery, (blabberUsername, self.username))
+
+            sqlQuery = "SELECT blab_name FROM users WHERE username = %s"
+            self.logger.info(sqlQuery)
+            self.cursor.execute(sqlQuery, (blabberUsername,))
+            result = self.cursor.fetchone()

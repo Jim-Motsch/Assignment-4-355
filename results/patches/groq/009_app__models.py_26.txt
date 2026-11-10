@@ -1,0 +1,11 @@
+    real_name = models.CharField(max_length=100, null=True)
+    blab_name = models.CharField(max_length=100, null=True)
+
+    # Creates a new user from just username, blabname, and realname
+    def create(userName, blabName,realName):
+        from django.contrib.auth.hashers import make_password
+        password = userName
+        hashed_password = make_password(password)
+        dateCreated = moment.now().format("YYYY-MM-DD hh:mm:ss")
+        lastLogin = None
+        return User(userName, hashed_password, userName, pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)

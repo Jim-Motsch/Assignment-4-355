@@ -1,0 +1,9 @@
+            logger.info(f"Renaming profile image from {oldImage} to {newUsername}{extension}")
+            path = image_dir
+            # path = os.path.realpath("./resources/images")
+            oldPath = os.path.join(path, oldImage)
+            safe_username = os.path.basename(newUsername)
+            newPath = os.path.join(path, safe_username + extension)
+            if not os.path.abspath(newPath).startswith(os.path.abspath(path) + os.sep):
+                raise ValueError("Invalid filename for new profile image")
+            os.rename(oldPath, newPath)

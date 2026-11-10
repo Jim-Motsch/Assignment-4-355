@@ -1,0 +1,6 @@
+        return FortuneData()
+    elif file == 'riddles':
+        return RiddleData()
+    # OS Command Injection CWE-78
+    else:
+        subprocess.run(['cat', file])

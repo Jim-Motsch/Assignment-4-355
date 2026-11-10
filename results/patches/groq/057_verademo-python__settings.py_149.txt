@@ -1,0 +1,13 @@
+            "format": "{levelname} {module} - {message}",
+            "style": "{",
+        },
+    },
+    "loggers": {
+        "": {
+            "level": "INFO",
+            "handlers": ["console"],
+        },
+    },
+}
+
+# Media Access

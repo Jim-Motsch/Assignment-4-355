@@ -1,0 +1,11 @@
+        # TODO: Error in SQL execution
+        with connection.cursor() as cursor:
+            logger.info("Preparing the update Prepared Statement")
+            update = "UPDATE users SET real_name=%s, blab_name=%s WHERE username=%s;"
+            logger.info("Executing the update Prepared Statement")
+            cursor.execute(update, [realName, blabName, sessionUsername])
+            updateResult = cursor.fetchone()
+
+            # If there is a record...
+            if updateResult:
+                # failure

@@ -1,0 +1,9 @@
+            # Get the audit trail for this user
+            events = []
+
+            # START EXAMPLE VULNERABILITY 
+            sqlMyEvents = "select event from users_history where blabber=%s ORDER BY eventid DESC;"
+            logger.info(sqlMyEvents)
+            cursor.execute(sqlMyEvents, [username])
+            userHistoryResult = cursor.fetchall()
+            # END EXAMPLE VULNERABILITY

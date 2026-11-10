@@ -1,0 +1,12 @@
+            return render(request, 'app/login.html',{})
+
+        else:
+            logger.info("User details were remembered")
+            decoded = base64.b64decode(userDetailsCookie)
+            try:
+                user_data = json.loads(decoded.decode('utf-8'))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                logger.warning("Invalid user details cookie")
+                return redirect('login')
+            logger.info("User details were retrieved for user: " + user_data.get('username', ''))
+            request.session['username'] = user_data.get('username')

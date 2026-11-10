@@ -1,0 +1,11 @@
+                        if rand.choice([False, True]) and (blabber != listener):
+                            
+
+                            logger.info("Adding " + listener.username + " as a listener of " + blabber.username)
+
+                            cursor.execute(listenersStatement, (blabber.username, listener.username))    
+
+            # Fetch pre-loaded Blabs
+            logger.info("Reading blabs from file")
+            with transaction.atomic():
+                blabsContent = loadFile("blabs.txt")

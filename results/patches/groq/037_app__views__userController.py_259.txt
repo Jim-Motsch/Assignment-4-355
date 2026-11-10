@@ -1,0 +1,14 @@
+    # lookup the TOTP secret
+    try:
+        
+        with connection.cursor() as cursor:
+        
+            sql = "SELECT totp_secret FROM users WHERE username = %s"
+            logger.info(sql)
+            cursor.execute(sql, [username])
+
+            result = cursor.fetchone()
+            if result:
+                columns = [col[0] for col in cursor.description]
+                result = dict(zip(columns, result))
+                totpSecret = result["totp_secret"]

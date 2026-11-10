@@ -1,0 +1,11 @@
+            blabsForMe = sqlBlabsForMe.format(len, cnt)
+            cursor.execute(blabsForMe % (username,))
+            results = cursor.fetchall()
+            ret = ""
+            for blab in results:
+                ret += template.format(username=escape(blab[0]), content=escape(blab[2]), blab_name=escape(blab[1]),
+                                       timestamp=blab[3].strftime("%b %d %Y"), blabid=blab[5], count=blab[4])    
+    except ConnectionError as ce:
+        logger.error("Unexpected connection error", ce)
+    except Exception as e:
+        logger.error("Unexpected error", e)
