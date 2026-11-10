@@ -1,4 +1,4 @@
-model,file,line_start,line_end,cwe_id,cwe_name,original_code,patched_code,patch_verdict,verification_summary
+model,file,line_start,line_end,cwe_id,cwe_name,original_code,patched_code,patch_verdict,verification_summary,review_notes
 groq,app/admin.py,7,7,CWE-200,Information Exposure,"from .models import User, Blab
 
 # Register your models here.
@@ -19,7 +19,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Blab)
 class BlabAdmin(admin.ModelAdmin):
-    list_display = ['blabid', 'content', 'timestamp']",,
+    list_display = ['blabid', 'content', 'timestamp']",correct,"Removed 'password' from list_display, so hashes are no longer shown.",
 groq,app/commands/IgnoreCommand.py,19,22,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        self.cursor = cursor
         self.username = username
 
@@ -46,7 +46,7 @@ groq,app/commands/IgnoreCommand.py,19,22,CWE-89,Improper Neutralization of Speci
             sqlQuery = ""SELECT blab_name FROM users WHERE username = %s""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery, (blabberUsername,))
-            result = self.cursor.fetchone()",,
+            result = self.cursor.fetchone()",correct,"Both the DELETE and SELECT are unquoted %s and passed after a comma, all inside the snippet.",
 groq,app/commands/IgnoreCommand.py,24,27,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        sqlQuery = ""DELETE FROM listeners WHERE blabber='%s' AND listener='%s';""
         self.logger.info(sqlQuery)
         try :
@@ -72,7 +72,7 @@ groq,app/commands/IgnoreCommand.py,24,27,CWE-89,Improper Neutralization of Speci
         event = self.username + "" is now ignoring "" + blabberUsername + "" ("" + result[0] + "")""
         sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (%s, %s)""
         self.logger.info(sqlQuery)
-        self.cursor.execute(sqlQuery, (self.username, event))",,
+        self.cursor.execute(sqlQuery, (self.username, event))",incorrect,"Queries are all parameterized, BUT the patch dropped the 'try :' line and dedented the code. The 'except:' below, outside the snippet is now orphaned, so this is a SyntaxError.",
 groq,app/commands/IgnoreCommand.py,29,32,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            sqlQuery = ""SELECT blab_name FROM users WHERE username = '"" + blabberUsername + ""'""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery)
@@ -94,7 +94,7 @@ groq,app/commands/IgnoreCommand.py,29,32,CWE-89,Improper Neutralization of Speci
             event = f""{self.username} is now ignoring {blabberUsername} ({result[0]})""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (%s, %s)""
             self.logger.info(sqlQuery)
-            self.cursor.execute(sqlQuery, (self.username, event))",,
+            self.cursor.execute(sqlQuery, (self.username, event))",correct,"SELECT and INSERT both parameterized. The f-string for event is just Python text passed as a parameter, so it's fine.",
 groq,app/commands/ListenCommand.py,22,22,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    @override
     def execute(self, blabberUsername):
         sqlQuery = ""INSERT INTO listeners (blabber, listener, status) values ('%s', '%s', 'Active');""
@@ -115,7 +115,7 @@ groq,app/commands/ListenCommand.py,22,22,CWE-89,Improper Neutralization of Speci
             sqlQuery = ""SELECT blab_name FROM users WHERE username = %s""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery, (blabberUsername,))
-            result = self.cursor.fetchone()",,
+            result = self.cursor.fetchone()",correct,INSERT and SELECT both unquoted and parameterized; 'Active' passed as a param too.,
 groq,app/commands/ListenCommand.py,26,26,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try :
             self.cursor.execute(sqlQuery % (blabberUsername, self.username))
 
@@ -136,7 +136,7 @@ groq,app/commands/ListenCommand.py,26,26,CWE-89,Improper Neutralization of Speci
 
             event = f""{self.username} started listening to {blabberUsername} ({result[0]})""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (%s, %s)""
-            self.logger.info(sqlQuery)",,
+            self.logger.info(sqlQuery)",incorrect,"Fixes the SELECT and INSERT, but also changed the first execute to a comma while that INSERT template line 20, outside the snippet still has quoted '%s', so the first query breaks.",
 groq,app/commands/ListenCommand.py,32,32,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            result = self.cursor.fetchone()
 
             event = self.username + "" started listening to "" + blabberUsername + "" ("" + result[0] + "")""
@@ -156,7 +156,7 @@ groq,app/commands/ListenCommand.py,32,32,CWE-89,Improper Neutralization of Speci
 
         except:
 
-            # TODO: Implement exceptions",,
+            # TODO: Implement exceptions",correct,INSERT parameterized same as IgnoreCommand 32.,
 groq,app/forms.py,15,16,CWE-522,Insufficiently Protected Credentials,"        fields = [
             'username','password','blab_name','real_name'
         ]
@@ -174,7 +174,7 @@ class RegisterForm(forms.Form):
     password = forms.CharField(max_length=100, widget=forms.PasswordInput)
     cpassword = forms.CharField(max_length=100, widget=forms.PasswordInput)
     blabName = forms.CharField(max_length=100)
-    realName = forms.CharField(max_length=100)",,
+    realName = forms.CharField(max_length=100)",correct,"Adds widget=forms.PasswordInput to both password fields, so they're masked.",
 groq,app/models.py,26,29,CWE-327,Use of a Broken Cryptographic Algorithm,"    real_name = models.CharField(max_length=100, null=True)
     blab_name = models.CharField(max_length=100, null=True)
 
@@ -198,7 +198,7 @@ class Blab(models.Model):
         hashed_password = make_password(password)
         dateCreated = moment.now().format(""YYYY-MM-DD hh:mm:ss"")
         lastLogin = None
-        return User(userName, hashed_password, userName, pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)",,
+        return User(userName, hashed_password, userName, pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)",incorrect,"Uses make_password, but it also indented create() into the class, turning it into a method. resetController does 'from app.models import create', which would now fail. And login still checks MD5.",
 groq,app/views/blabController.py,51,51,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
 
@@ -219,7 +219,7 @@ groq,app/views/blabController.py,51,51,CWE-89,Improper Neutralization of Special
 
                 feedBlabs = []
                 for blab in blabsForMeResults:
-                    author = Blabber()",,
+                    author = Blabber()",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 31). The execute now passes params, so the quoted placeholder is read as text and the query fails. (Also .format(10,0) is fine: hardcoded numbers.)",
 groq,app/views/blabController.py,75,75,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                request.currentUser = username
 
                 # Find the Blabs by this user
@@ -240,7 +240,7 @@ groq,app/views/blabController.py,75,75,CWE-89,Improper Neutralization of Special
 
                 myBlabs = []
                 for blab in blabsByMeResults:
-                    post = Blab()",,
+                    post = Blab()",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 27). The execute now passes params, so the quoted placeholder is read as text and the query fails.",
 groq,app/views/blabController.py,120,120,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
                 logger.info(""Creating query to add new Blab"")
                 addBlabSql = ""INSERT INTO blabs (blabber, content, timestamp) values ('%s', '%s', datetime('now'));""
@@ -260,7 +260,7 @@ groq,app/views/blabController.py,120,120,CWE-89,Improper Neutralization of Speci
                 if not cursor.rowcount:
                     request.error = ""Failed to add blab""
 
-        except ConnectionError as ce:",,
+        except ConnectionError as ce:",correct,"Unquoted placeholders, params after a comma, all in the snippet. Uses ? instead of %s. Django's SQLite backend accepts ?, so it runs here. ",
 groq,app/views/blabController.py,201,201,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try :
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -281,7 +281,7 @@ groq,app/views/blabController.py,201,201,CWE-89,Improper Neutralization of Speci
 
                 if (blabDetailsResults):
                     request.content = blabDetailsResults[0]
-                    request.blab_name = blabDetailsResults[1]",,
+                    request.blab_name = blabDetailsResults[1]",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 190). The execute now passes params, so the quoted placeholder is read as text and the query fails. ",
 groq,app/views/blabController.py,211,211,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                    request.blab_name = blabDetailsResults[1]
                     request.blabid = blabid
 
@@ -302,7 +302,7 @@ groq,app/views/blabController.py,211,211,CWE-89,Improper Neutralization of Speci
 
                     comments = []
                     for blab in blabCommentsResults:
-                        author = Blabber()",,
+                        author = Blabber()",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 194). The execute now passes params, so the quoted placeholder is read as text and the query fails.",
 groq,app/views/blabController.py,166,167,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"            blabsForMe = sqlBlabsForMe.format(len, cnt)
             cursor.execute(blabsForMe % (username,))
             results = cursor.fetchall()
@@ -324,7 +324,7 @@ groq,app/views/blabController.py,166,167,CWE-79,Improper Neutralization of Input
     except ConnectionError as ce:
         logger.error(""Unexpected connection error"", ce)
     except Exception as e:
-        logger.error(""Unexpected error"", e)",,
+        logger.error(""Unexpected error"", e)",incorrect,"Wraps output in escape(), but escape is never imported in blabController (only HttpResponse), so NameError.",
 groq,app/views/blabController.py,257,257,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try :
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -345,7 +345,7 @@ groq,app/views/blabController.py,257,257,CWE-89,Improper Neutralization of Speci
                 if not cursor.rowcount:
                     request.error = ""Failed to add comment""
 
-                response = redirect(""/blab?blabid="" + blabid)",,
+                response = redirect(""/blab?blabid="" + blabid)",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 251). The execute now passes params, so the quoted placeholder is read as text and the query fails. ",
 groq,app/views/blabController.py,292,292,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
         blabbersSql = (""SELECT users.username,"" + "" users.blab_name,"" + "" users.created_at,""
                     "" SUM(iif(listeners.listener='%s', 1, 0)) as listeners,""
@@ -364,7 +364,7 @@ groq,app/views/blabController.py,292,292,CWE-89,Improper Neutralization of Speci
                     "" SUM(iif(listeners.listener='%s', 1, 0)) as listeners,""
                     "" SUM(iif(listeners.status='Active',1,0)) as listening""
                     "" FROM users LEFT JOIN listeners ON users.username = listeners.blabber""
-                    "" WHERE users.username NOT IN (\""admin\"",\""admin-totp\"",'%s')"" + "" GROUP BY users.username"" + "" ORDER BY "" + sort + "";"")",,
+                    "" WHERE users.username NOT IN (\""admin\"",\""admin-totp\"",'%s')"" + "" GROUP BY users.username"" + "" ORDER BY "" + sort + "";"")",correct,"Adds an allowlist for sort, which is the right fix for ORDER BY injection. It doesn't touch the '%s' (those are the line 300 finding). Default 'blab_name ASC' isn't in the list, so it falls back to username (behavior change only).",
 groq,app/views/blabController.py,300,300,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            logger.info(""Creating database connection"")
             with connection.cursor() as cursor:
 
@@ -385,7 +385,7 @@ groq,app/views/blabController.py,300,300,CWE-89,Improper Neutralization of Speci
 
                 blabbers = []
                 for b in blabbersResults:
-                    blabber = Blabber()",,
+                    blabber = Blabber()",incorrect,"execute now passes params, but blabbersSql (line 292) still has quoted '%s' twice, so the query fails.",
 groq,app/views/blabController.py,348,348,CWE-94,Improper Control of Generation of Code ('Code Injection'),"
         try:
             logger.info(""Creating database connection"")
@@ -408,7 +408,7 @@ groq,app/views/blabController.py,348,348,CWE-94,Improper Control of Generation o
                 cmdObj.execute(blabberUsername)
                 return redirect('blabbers')       
         except ConnectionError as ce:
-            logger.error(""Unexpected connection error"", ce)",,
+            logger.error(""Unexpected connection error"", ce)",correct,"Replaces eval with getattr on the module. The name must end in 'Command', so only BlabberCommand/IgnoreCommand/ListenCommand can match, and no arbitrary code runs. Not a strict allowlist, but it removes code injection. sys is already imported.",
 groq,app/views/homeController.py,13,16,CWE-918,Server Side Request Forgery (SSRF),"def home(request):
     # Equivalent of HomeController.java
     if request.session.get('username'):
@@ -435,7 +435,7 @@ groq,app/views/homeController.py,13,16,CWE-918,Server Side Request Forgery (SSRF
         except: 
             # GOOD CODE:
             print(""redir"")
-            return redirect('feed')",,
+            return redirect('feed')",correct,"Uses SERVER_NAME (set by the server) instead of the attacker-controlled Host header, so the user no longer picks the destination.",
 groq,app/views/resetController.py,63,63,CWE-295,Improper Certificate Validation,"    if(request.method == ""GET""): 
         return showReset(request)
     elif(request.method == ""POST""):
@@ -456,7 +456,7 @@ groq,app/views/resetController.py,63,63,CWE-295,Improper Certificate Validation,
         data=h.request(""http://localhost/"",method='GET')
         return data
 
-    # Loads the reset webpage",,
+    # Loads the reset webpage",correct,"Removes disable_ssl_certificate_validation, so the default (validation on) applies.",
 groq,app/views/resetController.py,64,64,CWE-798,Use of Hard-coded Credentials,"        return showReset(request)
     elif(request.method == ""POST""):
         return processReset(request)
@@ -477,7 +477,7 @@ def showReset(request):","return showReset(request)
         if username and password:
             h.add_credentials(username, password)
         data = h.request(""http://localhost/"", method='GET')
-        return data",,
+        return data",correct,"Credentials now come from os.getenv, and os is imported at the top of resetController.",
 groq,app/views/resetController.py,102,102,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                usersStatement = ""INSERT INTO users (username, password, password_hint, totp_secret, created_at, last_login, real_name, blab_name) values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');""
                 if users[0].password == ""21232f297a57a5a743894a0e4a801fc3"":
                     logger.info(""Encryption successful!"")
@@ -494,7 +494,7 @@ groq,app/views/resetController.py,102,102,CWE-89,Improper Neutralization of Spec
                 for user in users:
                     logger.info(""Adding user "" + user.username)
                     cursor.execute(usersStatement, (user.username, user.password, user.password_hint, user.totp_secret, user.created_at,
-                                                     user.last_login, user.real_name, user.blab_name))",,
+                                                     user.last_login, user.real_name, user.blab_name))",correct,"Users INSERT unquoted and parameterized, all in the snippet.",
 groq,app/views/resetController.py,116,116,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                        if rand.choice([False, True]) and (blabber != listener):
                             
 
@@ -515,7 +515,7 @@ groq,app/views/resetController.py,116,116,CWE-89,Improper Neutralization of Spec
             # Fetch pre-loaded Blabs
             logger.info(""Reading blabs from file"")
             with transaction.atomic():
-                blabsContent = loadFile(""blabs.txt"")",,
+                blabsContent = loadFile(""blabs.txt"")",incorrect,"listenersStatement is defined on line 110 (outside the snippet) with quoted '%s', so the query fails with params.",
 groq,app/views/toolsController.py,68,68,CWE-78,Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'),"        return FortuneData()
     elif file == 'riddles':
         return RiddleData()
@@ -531,7 +531,7 @@ groq,app/views/toolsController.py,68,68,CWE-78,Improper Neutralization of Specia
         return RiddleData()
     # OS Command Injection CWE-78
     else:
-        subprocess.run(['cat', file])",,
+        subprocess.run(['cat', file])",correct,"subprocess.run with a list, no shell. subprocess is imported. Fixes CWE-78 (any file can still be read, a separate issue).",
 groq,app/views/userController.py,103,105,CWE-89,SQL Injection,"        try:
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -556,7 +556,7 @@ groq,app/views/userController.py,103,105,CWE-89,SQL Injection,"        try:
                 cursor.execute(sqlQuery, [username, hashed_pw])
                 # END FIXED CODE
                 parsed = sqlparse.parse(sqlQuery)[0]
-                logger.info(""Attempted login with username and password: "" + parsed[8].value)",,
+                logger.info(""Attempted login with username and password: "" + parsed[8].value)",correct,Login query parameterized and still hashes with md5,
 groq,app/views/userController.py,109,109,CWE-532,Information Exposure Through Log Files,"                            real_name, blab_name from users where username='"" + username + ""' \
                             and password='"" + hashlib.md5(password.encode('utf-8')).hexdigest() + ""';""
                 logger.info(sqlQuery)
@@ -574,7 +574,7 @@ groq,app/views/userController.py,109,109,CWE-532,Information Exposure Through Lo
                 cursor.execute(sqlQuery, sqlParams)
                 # END VULN CODE
                 # GOOD CODE
-                # sqlQuery = ""select username, password, password_hint, created_at, last_login, \",,
+                # sqlQuery = ""select username, password, password_hint, created_at, last_login, \",incorrect,"Rewrites the login query to SELECT only real_name, blab_name. Later code reads row['username'] and row['password_hint'], so KeyError and login breaks.",
 groq,app/views/userController.py,125,125,CWE-532,Information Exposure Through Log Files,"                row = cursor.fetchone()
 
                 if (row):
@@ -594,7 +594,7 @@ groq,app/views/userController.py,125,125,CWE-532,Information Exposure Through Lo
                     response.set_cookie('username', username)
                     private_key = rsa.generate_private_key(
                         public_exponent=65537, key_size=1024,) #CWE-326
-                    response.set_cookie('password', private_key)",,
+                    response.set_cookie('password', private_key)",correct,Logs only the username instead of the whole row (no password hash in logs).,
 groq,app/views/userController.py,127,128,CWE-326,Inadequate Encryption Strength,"                if (row):
                     columns = [col[0] for col in cursor.description]
                     row = dict(zip(columns, row))
@@ -617,7 +617,7 @@ groq,app/views/userController.py,127,128,CWE-326,Inadequate Encryption Strength,
 
                     if (not remember is None):
                         currentUser = User(username=row[""username""],
-                                    password_hint=row[""password_hint""], created_at=row[""created_at""],",,
+                                    password_hint=row[""password_hint""], created_at=row[""created_at""],",correct,key_size 1024 to 2048.,
 groq,app/views/userController.py,138,140,CWE-89,SQL Injection,"                                    password_hint=row[""password_hint""], created_at=row[""created_at""],
                                     last_login=row[""last_login""], real_name=row[""real_name""], 
                                     blab_name=row[""blab_name""])
@@ -642,7 +642,7 @@ groq,app/views/userController.py,138,140,CWE-89,SQL Injection,"                 
                     if username[-4:].lower() == ""totp"":
                         logger.info(""User "" + username + "" has TOTP enabled"")
                         request.session['totp_username'] = row['username']
-                        response = redirect('totp')",,
+                        response = redirect('totp')",correct,UPDATE parameterized uses ?,
 groq,app/views/userController.py,154,154,CWE-79,Cross-site Scripting (XSS),"                    
                 else:
                     logger.info(""User not found"")
@@ -656,7 +656,7 @@ groq,app/views/userController.py,154,154,CWE-79,Cross-site Scripting (XSS),"
 ","else:
                     logger.info(""User not found"")
                     request.error = ""Login failed. Please try again.""
-                    request.target = target",,
+                    request.target = target",correct,"Uses the repo's own SAFE generic message, so the username is no longer reflected.",
 groq,app/views/userController.py,184,184,CWE-89,SQL Injection,"    logger.info(""Entering password-hint with username: "" + username)
 
     try:
@@ -677,7 +677,7 @@ groq,app/views/userController.py,184,184,CWE-89,SQL Injection,"    logger.info("
             cursor.execute(sql, [username])
             row = cursor.fetchone()
             
-            if (row):",,
+            if (row):",correct,Standard %s + [username].,
 groq,app/views/userController.py,225,225,CWE-89,SQL Injection,"    # really here to display back to the user (it's a hack for a demo app ;) )
     try:
         #Create db connection
@@ -698,7 +698,7 @@ groq,app/views/userController.py,225,225,CWE-89,SQL Injection,"    # really here
             cursor.execute(sql, [username])
 
             result = cursor.fetchone()
-        if result:",,
+        if result:",correct,Standard %s + [username].,
 groq,app/views/userController.py,69,69,CWE-502,Deserialization of Untrusted Data,"            return render(request, 'app/login.html',{})
 
         else:
@@ -720,7 +720,7 @@ groq,app/views/userController.py,69,69,CWE-502,Deserialization of Untrusted Data
                 logger.warning(""Invalid user details cookie"")
                 return redirect('login')
             logger.info(""User details were retrieved for user: "" + user_data.get('username', ''))
-            request.session['username'] = user_data.get('username')",,
+            request.session['username'] = user_data.get('username')",incorrect,"json is never imported in userController, and the cookie is still written with pickle.dumps (line 679).",
 groq,app/views/userController.py,42,45,CWE-601,URL Redirection to Untrusted Site ('Open Redirect'),"        target = request.GET.get('target')
         username = request.GET.get('username')
 
@@ -751,7 +751,7 @@ groq,app/views/userController.py,42,45,CWE-601,URL Redirection to Untrusted Site
         userDetailsCookie = request.COOKIES.get('user')
         if userDetailsCookie is None or not userDetailsCookie:
             logger.info(""No user cookie"")
-            userDetailsCookie = None",,
+            userDetailsCookie = None",incorrect,"Uses url_has_allowed_host_and_scheme, which is the right check, but it's never imported, so NameError.",
 groq,app/views/userController.py,91,96,CWE-601,URL Redirection to Untrusted Site ('Open Redirect'),"        remember = request.POST.get('remember')
         target = request.POST.get('target')
 
@@ -782,7 +782,7 @@ groq,app/views/userController.py,91,96,CWE-601,URL Redirection to Untrusted Site
         try:
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
-                logger.info(""Creating database query"")",,
+                logger.info(""Creating database query"")",incorrect,Same as 42: url_has_allowed_host_and_scheme not imported.,
 groq,app/views/userController.py,259,262,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    # lookup the TOTP secret
     try:
         
@@ -809,7 +809,7 @@ groq,app/views/userController.py,259,262,CWE-89,Improper Neutralization of Speci
             if result:
                 columns = [col[0] for col in cursor.description]
                 result = dict(zip(columns, result))
-                totpSecret = result[""totp_secret""]",,
+                totpSecret = result[""totp_secret""]",correct,Standard %s + [username].,
 groq,app/views/userController.py,341,344,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
     # Get the Database Connection
     logger.info(""Creating the Database connection"")
@@ -835,7 +835,7 @@ groq,app/views/userController.py,341,344,CWE-89,Improper Neutralization of Speci
                 return render(request, 'app/register.html')
             else:
                 rand_pass = passeo().generate(10, numbers=True, symbols=True)
-                sk = SigningKey.generate()",,
+                sk = SigningKey.generate()",correct,Standard %s + [username].,
 groq,app/views/userController.py,410,420,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                realName = form.cleaned_data.get('realName')
                 blabName = form.cleaned_data.get('blabName')
                 #mysqlCurrentDateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -873,7 +873,7 @@ groq,app/views/userController.py,410,420,CWE-89,Improper Neutralization of Speci
                 cursor.execute(query, params)
                 sqlStatement = cursor.fetchone() #<- variable for response
                 logger.info(query)
-                # END EXAMPLE VULNERABILITY",,
+                # END EXAMPLE VULNERABILITY",correct,"All 6 values parameterized, including username and password.",
 groq,app/views/userController.py,494,495,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"          
         logger.info(""Getting Database connection"")
         with connection.cursor() as cursor:    
@@ -895,7 +895,7 @@ groq,app/views/userController.py,494,495,CWE-89,Improper Neutralization of Speci
             for i in myHecklersResults:
                 
                 heckler = Blabber()
-                heckler.setUsername(i[0])",,
+                heckler.setUsername(i[0])",incorrect,"Query template is defined ABOVE the snippet and still has quotes around '%s' (line 487). The execute now passes params, so the quoted placeholder is read as text and the query fails.",
 groq,app/views/userController.py,315,316,CWE-352,Cross-Site Request Forgery (CSRF),"    logger.info(""Redirecting to login..."")
     return response
 
@@ -917,7 +917,7 @@ def register(request):
     if(request.method == ""GET""):
         return showRegister(request)
     elif(request.method == ""POST""):
-        return processRegister(request)",,
+        return processRegister(request)",incorrect,"Swaps to @csrf_protect, but csrf_protect is never imported (only csrf_exempt). That's a NameError when the module loads, so the whole userController breaks.",
 groq,app/views/userController.py,413,413,CWE-256,Plaintext Storage of a Password,"                #create query
                 query = ''
                 query += ""insert into users (username, password, password_hint, totp_secret, created_at, real_name, blab_name) values(""
@@ -938,7 +938,7 @@ groq,app/views/userController.py,413,413,CWE-256,Plaintext Storage of a Password
                 query += (""datetime('now'),"")
                 query += (""'"" + realName + ""',"")
                 query += (""'"" + blabName + ""'"")
-                query += ("");"")",,
+                query += ("");"")",incorrect,"make_password not imported (crash), the query is still built with +, and login still checks MD5.",
 groq,app/views/userController.py,412,412,CWE-327,Use of a Broken or Risky Cryptographic Algorithm,"                #mysqlCurrentDateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 #create query
                 query = ''
@@ -959,7 +959,7 @@ groq,app/views/userController.py,412,412,CWE-327,Use of a Broken or Risky Crypto
                 query += (""'"" + pyotp.random_base32() + ""',"")
                 query += (""datetime('now'),"")
                 query += (""'"" + realName + ""',"")
-                query += (""'"" + blabName + ""'"")",,
+                query += (""'"" + blabName + ""'"")",incorrect,"make_password not imported (crash), and login still compares MD5, so nobody could log in.",
 groq,app/views/userController.py,511,511,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
             # Get the audit trail for this user
             events = []
@@ -978,7 +978,7 @@ groq,app/views/userController.py,511,511,CWE-89,Improper Neutralization of Speci
             logger.info(sqlMyEvents)
             cursor.execute(sqlMyEvents, [username])
             userHistoryResult = cursor.fetchall()
-            # END EXAMPLE VULNERABILITY",,
+            # END EXAMPLE VULNERABILITY",correct,"Unquoted %s + [username], in the snippet.",
 groq,app/views/userController.py,521,521,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
             for result in userHistoryResult :
                 events.append(result[0])
@@ -998,7 +998,7 @@ groq,app/views/userController.py,521,521,CWE-89,Improper Neutralization of Speci
             cursor.execute(sql, [username])
             myInfoResults = cursor.fetchone()
             if not myInfoResults:
-                return JsonResponse({'message':'Error, no Inforesults found'})",,
+                return JsonResponse({'message':'Error, no Inforesults found'})",correct,Standard %s + [username].,
 groq,app/views/userController.py,586,586,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        # TODO: Error in SQL execution
         with connection.cursor() as cursor:
             logger.info(""Preparing the update Prepared Statement"")
@@ -1019,7 +1019,7 @@ groq,app/views/userController.py,586,586,CWE-89,Improper Neutralization of Speci
 
             # If there is a record...
             if updateResult:
-                # failure",,
+                # failure",correct,"All three unquoted, params after a comma.",
 groq,app/views/userController.py,559,559,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"    username = request.POST.get('username')
     file = request.FILES.get('file')
     #TODO: Experiment with safe=False on JsonResponse, send in non-dict objects for serialization
@@ -1042,7 +1042,7 @@ groq,app/views/userController.py,559,559,CWE-79,Improper Neutralization of Input
     response = JsonResponse({'values':{""username"": username.lower(), ""realName"": realName, ""blabName"": blabName}, 'message':msg},status=200)
     
     logger.info(""entering processProfile"")
-    sessionUsername = request.session.get('username')",,
+    sessionUsername = request.session.get('username')",incorrect,"escape() is never imported in userController, so NameError.",
 groq,app/views/userController.py,634,634,CWE-502,Deserialization of Untrusted Data,"        # Update remember me functionality
         userDetailsCookie = request.COOKIES.get('user')
         if userDetailsCookie is not None:
@@ -1066,7 +1066,7 @@ groq,app/views/userController.py,634,634,CWE-502,Deserialization of Untrusted Da
             response = updateInResponse(unencodedUserDetails, response)
         
 
-        # Update user profile image",,
+        # Update user profile image",incorrect,"json and types are never imported (crash), and the cookie is still written with pickle.dumps (line 679).",
 groq,app/views/userController.py,696,696,CWE-22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),"        logger.info(""User is not Logged In - redirecting..."")
         return redirect('/login?target=profile')
     logger.info(""User is Logged In - continuing... UA="" + request.headers[""User-Agent""] + "" U="" + username)
@@ -1090,7 +1090,7 @@ groq,app/views/userController.py,696,696,CWE-22,Improper Limitation of a Pathnam
     logger.info(""Fetching profile image: "" + path)
 
     try:
-        if os.path.exists(path):",,
+        if os.path.exists(path):",correct,"abspath/join + startswith check is the right fix, but Http404 isn't imported. Only attack requests hit that line, and they still get blocked (500 instead of 404).",
 groq,app/views/userController.py,652,652,CWE-434,Unrestricted Upload of File with Dangerous Type,"        if oldImage:
             os.remove(os.path.join(imageDir,oldImage))
         
@@ -1116,7 +1116,7 @@ groq,app/views/userController.py,652,652,CWE-434,Unrestricted Upload of File wit
                         destination.write(chunk)
             else:
                 response = JsonResponse({'message': ""File must be a PNG image.""}, status=422)
-                return response",,
+                return response",incorrect,"Checks real file content instead of the extension, which is a good idea, but imghdr was removed in Python 3.13 (the version in this environment), so the import fails on modern Python. Judgment call: incorrect, or correct-with-note if your Python is older.",
 groq,app/views/userController.py,774,774,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                    ""UPDATE users_history SET blabber='%s' WHERE blabber='%s'"" ]
         
                 # Execute updates as part of a batch transaction
@@ -1137,7 +1137,7 @@ groq,app/views/userController.py,774,774,CWE-89,Improper Neutralization of Speci
 
         # Rename the user profile image to match new username
         oldImage = getProfileImageNameFromUsername(oldUsername)
-        if oldImage:",,
+        if oldImage:",incorrect,"Only the last of the 6 UPDATE queries was unquoted. The other 5 (lines 764-768) still have '%s', so they fail and the rename rolls back. ",
 groq,app/views/userController.py,787,787,CWE-22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),"            logger.info(""Renaming profile image from "" + oldImage + "" to "" + newUsername + extension)
             path = image_dir
             # path = os.path.realpath(""./resources/images"")
@@ -1156,7 +1156,7 @@ groq,app/views/userController.py,787,787,CWE-22,Improper Limitation of a Pathnam
             newPath = os.path.join(path, safe_username + extension)
             if not os.path.abspath(newPath).startswith(os.path.abspath(path) + os.sep):
                 raise ValueError(""Invalid filename for new profile image"")
-            os.rename(oldPath, newPath)",,
+            os.rename(oldPath, newPath)",correct,Uses basename + abspath check so the new filename can't escape the folder.,
 groq,verademo-python/settings.py,24,24,CWE-321,Use of Hard-coded Cryptographic Key,"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -1177,7 +1177,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# allow all hosts",,
+# allow all hosts",out of scope,Config row. OUT OF SCOPE: leave patch_verdict blank and change the Groq verdict to out of scope.,
 groq,verademo-python/settings.py,27,27,CWE-215,Information Exposure Through Debug Information,"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-m(k83)=fpt1d5&(u6_$+3ppc6s7!_(9!vps5f17yqp4=6ei$vv'
@@ -1195,7 +1195,7 @@ SECRET_KEY = 'django-insecure-m(k83)=fpt1d5&(u6_$+3ppc6s7!_(9!vps5f17yqp4=6ei$vv
 DEBUG = False
 
 # allow all hosts
-ALLOWED_HOSTS = ['*']",,
+ALLOWED_HOSTS = ['*']",out of scope,Config row. OUT OF SCOPE: leave blank.,
 groq,verademo-python/settings.py,49,49,CWE-352,Cross-Site Request Forgery (CSRF),"
 MIDDLEWARE = [
     # 'django.middleware.security.SecurityMiddleware',
@@ -1214,7 +1214,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]",,
+]",out of scope,"Enables CSRF middleware, but the forms don't include CSRF tokens, so most POSTs would be blocked.",
 groq,verademo-python/settings.py,46,46,CWE-693,Protection Mechanism Failure,"    'django.contrib.staticfiles',
     'app'
 ]
@@ -1225,7 +1225,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',","'django.contrib.staticfiles',
+    'django.contrib.messages.middleware.MessageMiddleware',","django.contrib.staticfiles',
     'app'
 ]
 
@@ -1235,7 +1235,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',",,
+    'django.contrib.messages.middleware.MessageMiddleware',",out of scope,Config row. OUT OF SCOPE: leave blank.,
 groq,verademo-python/settings.py,149,152,CWE-532,Information Exposure Through Log Files,"            ""format"": ""{levelname} {module} - {message}"",
             ""style"": ""{"",
         },
@@ -1261,4 +1261,4 @@ groq,verademo-python/settings.py,149,152,CWE-532,Information Exposure Through Lo
     },
 }
 
-# Media Access",,
+# Media Access",out of scope,Config row. OUT OF SCOPE: leave blank.,

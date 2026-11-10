@@ -1,0 +1,4 @@
+model,total_findings,out_of_scope,unreviewed,true_vuln_true_patch,true_vuln_false_patch,true_vuln_unpatched,hallucination,precision
+gemini,43,2,0,26,13,1,1,98%
+claude,83,4,0,53,21,1,4,95%
+groq,63,5,0,29,23,1,5,91%

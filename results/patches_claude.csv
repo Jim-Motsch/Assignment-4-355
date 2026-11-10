@@ -20,7 +20,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Blab)
 class BlabAdmin(admin.ModelAdmin):
-    list_display = ['blabid', 'content', 'timestamp']",,
+    list_display = ['blabid', 'content', 'timestamp']",Correct,Removes the password from the admin page so admins can't see password hashes.
 claude,app/commands/IgnoreCommand.py,22,22,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    @override
     def execute(self, blabberUsername):
         sqlQuery = ""DELETE FROM listeners WHERE blabber='%s' AND listener='%s';""
@@ -41,7 +41,7 @@ claude,app/commands/IgnoreCommand.py,22,22,CWE-89,Improper Neutralization of Spe
             sqlQuery = ""SELECT blab_name FROM users WHERE username = %s""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery, (blabberUsername,))
-            result = self.cursor.fetchone()",,
+            result = self.cursor.fetchone()",Correct,Passes the usernames as parameters instead of pasting them into the DELETE query.
 claude,app/commands/IgnoreCommand.py,24,26,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        sqlQuery = ""DELETE FROM listeners WHERE blabber='%s' AND listener='%s';""
         self.logger.info(sqlQuery)
         try :
@@ -66,7 +66,7 @@ claude,app/commands/IgnoreCommand.py,24,26,CWE-89,Improper Neutralization of Spe
 
             event = self.username + "" is now ignoring "" + blabberUsername + "" ("" + result[0] + "")""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (\"""" + self.username + ""\"", \"""" + event + ""\"")""
-            self.logger.info(sqlQuery)",,
+            self.logger.info(sqlQuery)",Correct,Passes blabberUsername as a parameter instead of gluing it into the SELECT query.
 claude,app/commands/IgnoreCommand.py,30,30,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery)
             result = self.cursor.fetchone()
@@ -86,7 +86,7 @@ claude,app/commands/IgnoreCommand.py,30,30,CWE-89,Improper Neutralization of Spe
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery, (self.username, event))
 
-        except:",,
+        except:",Correct,Passes the username and event as parameters instead of gluing them into the INSERT query.
 claude,app/commands/IgnoreCommand.py,34,38,CWE-755,Improper Handling of Exceptional Conditions,"            event = self.username + "" is now ignoring "" + blabberUsername + "" ("" + result[0] + "")""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (\"""" + self.username + ""\"", \"""" + event + ""\"")""
             self.logger.info(sqlQuery)
@@ -103,7 +103,7 @@ claude,app/commands/IgnoreCommand.py,34,38,CWE-755,Improper Handling of Exceptio
 
         except Exception as e:
 
-            self.logger.error(""Unexpected error: %s"", e, exc_info=True)",,
+            self.logger.error(""Unexpected error: %s"", e, exc_info=True)",Correct,Catches only real exceptions and fixes the log call so errors actually get logged.
 claude,app/commands/ListenCommand.py,22,22,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    @override
     def execute(self, blabberUsername):
         sqlQuery = ""INSERT INTO listeners (blabber, listener, status) values ('%s', '%s', 'Active');""
@@ -124,7 +124,7 @@ claude,app/commands/ListenCommand.py,22,22,CWE-89,Improper Neutralization of Spe
             sqlQuery = ""SELECT blab_name FROM users WHERE username = %s""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery, (blabberUsername,))
-            result = self.cursor.fetchone()",,
+            result = self.cursor.fetchone()",Correct,Passes the usernames as parameters instead of pasting them into the INSERT query.
 claude,app/commands/ListenCommand.py,24,26,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        sqlQuery = ""INSERT INTO listeners (blabber, listener, status) values ('%s', '%s', 'Active');""
         self.logger.info(sqlQuery)
         try :
@@ -149,7 +149,7 @@ claude,app/commands/ListenCommand.py,24,26,CWE-89,Improper Neutralization of Spe
 
             event = self.username + "" started listening to "" + blabberUsername + "" ("" + result[0] + "")""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (\"""" + self.username + ""\"", \"""" + event + ""\"")""
-            self.logger.info(sqlQuery)",,
+            self.logger.info(sqlQuery)",Correct,Passes blabberUsername as a parameter instead of gluing it into the SELECT query.
 claude,app/commands/ListenCommand.py,29,32,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            sqlQuery = ""SELECT blab_name FROM users WHERE username = '"" + blabberUsername + ""'""
             self.logger.info(sqlQuery)
             self.cursor.execute(sqlQuery)
@@ -175,7 +175,7 @@ claude,app/commands/ListenCommand.py,29,32,CWE-89,Improper Neutralization of Spe
 
         except:
 
-            # TODO: Implement exceptions",,
+            # TODO: Implement exceptions",Correct,Passes all the values as parameters in both the SELECT and the INSERT query.
 claude,app/commands/ListenCommand.py,34,38,CWE-755,Improper Handling of Exceptional Conditions,"            event = self.username + "" started listening to "" + blabberUsername + "" ("" + result[0] + "")""
             sqlQuery = ""INSERT INTO users_history (blabber, event) VALUES (\"""" + self.username + ""\"", \"""" + event + ""\"")""
             self.logger.info(sqlQuery)
@@ -187,7 +187,7 @@ claude,app/commands/ListenCommand.py,34,38,CWE-755,Improper Handling of Exceptio
 
             self.logger.error(""Unexpected error:"", sys.exc_info()[0])","except Exception as e:
 
-            self.logger.error(""Unexpected error: %s"", sys.exc_info()[0], exc_info=True)",,
+            self.logger.error(""Unexpected error: %s"", sys.exc_info()[0], exc_info=True)",Correct,Catches only real exceptions and fixes the log call so errors actually get logged.
 claude,app/forms.py,15,16,CWE-549,Missing Password Field Masking,"        fields = [
             'username','password','blab_name','real_name'
         ]
@@ -205,7 +205,7 @@ class RegisterForm(forms.Form):
     password = forms.CharField(max_length=100, widget=forms.PasswordInput)
     cpassword = forms.CharField(max_length=100, widget=forms.PasswordInput)
     blabName = forms.CharField(max_length=100)
-    realName = forms.CharField(max_length=100)",,
+    realName = forms.CharField(max_length=100)",Correct,Uses a password input so the password shows as dots instead of plain text.
 claude,app/models.py,26,29,CWE-1391,Use of Weak Credentials,"    real_name = models.CharField(max_length=100, null=True)
     blab_name = models.CharField(max_length=100, null=True)
 
@@ -226,7 +226,7 @@ def create(userName, blabName,realName):
     password = secrets.token_urlsafe(16)
     dateCreated = moment.now().format(""YYYY-MM-DD hh:mm:ss"")
     lastLogin = None
-    return User(userName, hashlib.md5(password.encode('utf-8')).hexdigest(), """", pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)",,
+    return User(userName, hashlib.md5(password.encode('utf-8')).hexdigest(), """", pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)",Correct,Gives new users a random password instead of using their username as the password.
 claude,app/models.py,29,29,CWE-328,Use of Weak Hash,"# Creates a new user from just username, blabname, and realname
 def create(userName, blabName,realName):
     password = userName
@@ -248,7 +248,7 @@ def create(userName, blabName,realName):
 # Table for a blab, which is a message on the website
 class Blab(models.Model):
     class Meta:
-        db_table='blabs'",,
+        db_table='blabs'",Incorrect,"Uses a stronger hash, but login still checks MD5, so nobody could log in."
 claude,app/models.py,16,18,CWE-256,Plaintext Storage of a Password,"    
     class Meta:
         db_table='users'
@@ -290,7 +290,7 @@ claude,app/models.py,16,18,CWE-256,Plaintext Storage of a Password,"
                 identify_hasher(self.password)
             except ValueError:
                 self.password = make_password(self.password)
-        super().save(*args, **kwargs)",,
+        super().save(*args, **kwargs)",Incorrect,"Adds password methods the app never uses, and the plain password is still saved in password_hint."
 claude,app/views/blabController.py,51,51,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
 
@@ -311,7 +311,7 @@ claude,app/views/blabController.py,51,51,CWE-89,Improper Neutralization of Speci
 
                 feedBlabs = []
                 for blab in blabsForMeResults:
-                    author = Blabber()",,
+                    author = Blabber()",Incorrect,"The query template still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,75,75,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                request.currentUser = username
 
                 # Find the Blabs by this user
@@ -322,7 +322,7 @@ claude,app/views/blabController.py,75,75,CWE-89,Improper Neutralization of Speci
 
                 myBlabs = []
                 for blab in blabsByMeResults:
-                    post = Blab()","cursor.execute(sqlBlabsByMe, (username,))",,
+                    post = Blab()","cursor.execute(sqlBlabsByMe, (username,))",Incorrect,"The query template still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,120,120,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
                 logger.info(""Creating query to add new Blab"")
                 addBlabSql = ""INSERT INTO blabs (blabber, content, timestamp) values ('%s', '%s', datetime('now'));""
@@ -342,7 +342,7 @@ claude,app/views/blabController.py,120,120,CWE-89,Improper Neutralization of Spe
                 if not cursor.rowcount:
                     request.error = ""Failed to add blab""
 
-        except ConnectionError as ce:",,
+        except ConnectionError as ce:",Correct,Removes the quotes and passes the username and blab as parameters.
 claude,app/views/blabController.py,161,162,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    try :
         logger.info(""Creating the Database connection"")
         with connection.cursor() as cursor:
@@ -367,7 +367,7 @@ claude,app/views/blabController.py,161,162,CWE-89,Improper Neutralization of Spe
             ret = """"
             for blab in results:
                 ret += template.format(username = blab[0], content = blab[2], blab_name = blab[1],
-                                       timestamp = blab[3].strftime(""%b %d %Y""), blabid = blab[5], count = blab[4])",,
+                                       timestamp = blab[3].strftime(""%b %d %Y""), blabid = blab[5], count = blab[4])",Incorrect,"Makes the numbers safe, but the query template still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,166,167,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"            blabsForMe = sqlBlabsForMe.format(len, cnt)
             cursor.execute(blabsForMe % (username,))
             results = cursor.fetchall()
@@ -392,7 +392,7 @@ claude,app/views/blabController.py,166,167,CWE-79,Improper Neutralization of Inp
         logger.error(""Unexpected error"", e)
 ```
 
-Note: this requires `import html` at the top of the file.",,
+Note: this requires `import html` at the top of the file.",Incorrect,"Escapes the output, but html is never imported, so the code crashes."
 claude,app/views/blabController.py,201,201,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try :
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -413,7 +413,7 @@ claude,app/views/blabController.py,201,201,CWE-89,Improper Neutralization of Spe
 
                 if (blabDetailsResults):
                     request.content = blabDetailsResults[0]
-                    request.blab_name = blabDetailsResults[1]",,
+                    request.blab_name = blabDetailsResults[1]",Incorrect,"The query template still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,211,211,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                    request.blab_name = blabDetailsResults[1]
                     request.blabid = blabid
 
@@ -434,7 +434,7 @@ claude,app/views/blabController.py,211,211,CWE-89,Improper Neutralization of Spe
 
                     comments = []
                     for blab in blabCommentsResults:
-                        author = Blabber()",,
+                        author = Blabber()",Incorrect,"The query template still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,257,257,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try :
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -456,7 +456,7 @@ claude,app/views/blabController.py,257,257,CWE-89,Improper Neutralization of Spe
                 if not cursor.rowcount:
                     request.error = ""Failed to add comment""
 
-                response = redirect(""/blab?blabid="" + blabid)",,
+                response = redirect(""/blab?blabid="" + blabid)",Correct,Removes the quotes and passes all four values as parameters.
 claude,app/views/blabController.py,292,292,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
         blabbersSql = (""SELECT users.username,"" + "" users.blab_name,"" + "" users.created_at,""
                     "" SUM(iif(listeners.listener='%s', 1, 0)) as listeners,""
@@ -492,7 +492,7 @@ claude,app/views/blabController.py,292,292,CWE-89,Improper Neutralization of Spe
 
         try:
             logger.info(""Creating database connection"")
-            with connection.cursor() as cursor:",,
+            with connection.cursor() as cursor:",Correct,"Only allows known column names for sorting, so sort can't inject SQL."
 claude,app/views/blabController.py,300,300,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"            logger.info(""Creating database connection"")
             with connection.cursor() as cursor:
 
@@ -513,7 +513,7 @@ claude,app/views/blabController.py,300,300,CWE-89,Improper Neutralization of Spe
 
                 blabbers = []
                 for b in blabbersResults:
-                    blabber = Blabber()",,
+                    blabber = Blabber()",Incorrect,"The query still has quotes around '%s', so the query breaks."
 claude,app/views/blabController.py,272,272,CWE-352,Cross-Site Request Forgery (CSRF),"
     return response
 #
@@ -531,7 +531,7 @@ def blabbers(request):
     if request.method == ""GET"":
         sort = request.GET.get('sort')
         if (sort is None or not sort):
-            sort = ""blab_name ASC""",,
+            sort = ""blab_name ASC""",Incorrect,"Removes csrf_exempt, but CSRF checking is still turned off in settings, so nothing changes."
 claude,app/views/blabController.py,43,43,CWE-117,Improper Output Neutralization for Logs,"    if request.method == ""GET"":
         username = request.session.get('username')
         if not username:
@@ -553,7 +553,7 @@ claude,app/views/blabController.py,43,43,CWE-117,Improper Output Neutralization 
 
         try:
             logger.info(""Creating the Database connection"")
-            with connection.cursor() as cursor:",,
+            with connection.cursor() as cursor:",Correct,Removes line breaks from the user agent and username before logging them.
 claude,app/views/blabController.py,341,342,CWE-117,Improper Output Neutralization for Logs,"        logger.info(""User is Logged In - continuing... UA="" + request.headers[""User-Agent""] + "" U="" + username)
 
         if (command is None or not command):
@@ -576,7 +576,7 @@ claude,app/views/blabController.py,341,342,CWE-117,Improper Output Neutralizatio
         try:
             logger.info(""Creating database connection"")
             with connection.cursor() as cursor:
-                module = command.capitalize()[:-1] + ""Command""",,
+                module = command.capitalize()[:-1] + ""Command""",Correct,Removes line breaks from the username and command before logging them.
 claude,app/views/homeController.py,13,16,CWE-918,Server-Side Request Forgery (SSRF),"def home(request):
     # Equivalent of HomeController.java
     if request.session.get('username'):
@@ -594,7 +594,7 @@ claude,app/views/homeController.py,13,16,CWE-918,Server-Side Request Forgery (SS
     # Equivalent of HomeController.java
     if request.session.get('username'):
         # Redirect directly to the feed; no server-side request is built from client-controlled headers
-        return redirect('feed')",,
+        return redirect('feed')",Correct,"Redirects straight to the feed, so the server never makes a request based on the Host header."
 claude,app/views/resetController.py,63,63,CWE-295,Improper Certificate Validation,"    if(request.method == ""GET""): 
         return showReset(request)
     elif(request.method == ""POST""):
@@ -609,7 +609,7 @@ claude,app/views/resetController.py,63,63,CWE-295,Improper Certificate Validatio
         h = httplib2.Http("".cache"", disable_ssl_certificate_validation=False)
         h.add_credentials('thiswaskevinsidea','hardcode') #CWE-798
         data=h.request(""http://localhost/"",method='GET')
-        return data",,
+        return data",Correct,Turns SSL certificate checking back on.
 claude,app/views/resetController.py,64,64,CWE-798,Use of Hard-coded Credentials,"        return showReset(request)
     elif(request.method == ""POST""):
         return processReset(request)
@@ -634,7 +634,7 @@ def showReset(request):","return showReset(request)
         return data
 
 # Loads the reset webpage
-def showReset(request):",,
+def showReset(request):",Correct,Loads the credentials from environment variables instead of hardcoding them.
 claude,app/views/resetController.py,97,103,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        # Get the Database Connection
         with connection.cursor() as cursor:
             with transaction.atomic():
@@ -667,7 +667,7 @@ claude,app/views/resetController.py,97,103,CWE-89,Improper Neutralization of Spe
             # Add the listeners
             logger.info(""Preparing the Statement for adding listeners"")
             with transaction.atomic():
-                listenersStatement = ""INSERT INTO listeners (blabber, listener, status) values ('%s', '%s', 'Active');""",,
+                listenersStatement = ""INSERT INTO listeners (blabber, listener, status) values ('%s', '%s', 'Active');""",Correct,Removes the quotes and passes all the user values as parameters.
 claude,app/views/resetController.py,108,116,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                                                     user.last_login, user.real_name, user.blab_name))
 
             # Add the listeners
@@ -702,7 +702,7 @@ claude,app/views/resetController.py,108,116,CWE-89,Improper Neutralization of Sp
             # Fetch pre-loaded Blabs
             logger.info(""Reading blabs from file"")
             with transaction.atomic():
-                blabsContent = loadFile(""blabs.txt"")",,
+                blabsContent = loadFile(""blabs.txt"")",Correct,Removes the quotes and passes both usernames as parameters.
 claude,app/views/resetController.py,57,75,CWE-352,Cross-Site Request Forgery (CSRF),"        create(""stuart"", ""Stuart"", ""Stuart Sessions""),
         create(""scottsim"", ""Scott Simpson"", ""Scott Simpson"")]
 
@@ -767,7 +767,7 @@ def processReset(request):
     if not confirm:
         request.error = ""Make sure to press confirm""
         return render(request, 'app/reset.html')
-    logger.info(""Entering processReset"")",,
+    logger.info(""Entering processReset"")",Incorrect,"Turns on CSRF checking, but the reset form has no CSRF token, so every reset would be blocked."
 claude,app/views/resetController.py,74,88,CWE-862,Missing Authorization,"def showReset(request):
     logger.info(""Entering showReset"")
     return render(request, 'app/reset.html',{})
@@ -826,7 +826,7 @@ def processReset(request):
     try:
         logger.info(""Getting Database connection"")
         # Get the Database Connection
-        with connection.cursor() as cursor:",,
+        with connection.cursor() as cursor:",Correct,Only lets a logged-in admin reset the database.
 claude,app/views/resetController.py,20,53,CWE-798,Use of Hard-coded Credentials,"
 
 ##################RESET CONTROLLER#####################
@@ -924,7 +924,7 @@ users = [
 
 # Transfers the request depeneding on request type.
 def reset(request):
-    if(request.method == ""GET""):",,
+    if(request.method == ""GET""):",Incorrect,"Puts the random password in the blab name spot, so the password is still the username."
 claude,app/views/toolsController.py,68,68,CWE-78,Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection'),"        return FortuneData()
     elif file == 'riddles':
         return RiddleData()
@@ -941,7 +941,7 @@ claude,app/views/toolsController.py,68,68,CWE-78,Improper Neutralization of Spec
     # OS Command Injection CWE-78
     else:
         import subprocess
-        subprocess.run(['cat', '--', str(file)], shell=False, check=False)",,
+        subprocess.run(['cat', '--', str(file)], shell=False, check=False)",Correct,"Runs cat without a shell, so the filename can't add extra commands."
 claude,app/views/toolsController.py,43,43,CWE-88,Improper Neutralization of Argument Delimiters in a Command ('Argument Injection'),"# pings selected host and outputs the result
 def ping(host):
     output = """"
@@ -966,7 +966,7 @@ def ping(host):
         stdout, stderr = p.communicate(timeout=5)
     
         output = stdout.decode() if stdout else """"
-        logger.info(output)",,
+        logger.info(output)",Incorrect,"Checks the host, but re is never imported, so ping always fails."
 claude,app/views/toolsController.py,41,41,CWE-117,Improper Output Neutralization for Logs,"    return render(request, 'app/tools.html', {""host"" : host})
 
 # pings selected host and outputs the result
@@ -987,7 +987,7 @@ def ping(host):
     try:
         p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         
-        stdout, stderr = p.communicate(timeout=5)",,
+        stdout, stderr = p.communicate(timeout=5)",Correct,Removes line breaks from the host before logging it.
 claude,app/views/userController.py,43,43,CWE-601,URL Redirection to Untrusted Site ('Open Redirect'),"        username = request.GET.get('username')
 
         if request.session.get('username'):
@@ -1008,7 +1008,7 @@ claude,app/views/userController.py,43,43,CWE-601,URL Redirection to Untrusted Si
                 return redirect('feed')
 
         userDetailsCookie = request.COOKIES.get('user')
-        if userDetailsCookie is None or not userDetailsCookie:",,
+        if userDetailsCookie is None or not userDetailsCookie:",Incorrect,"Checks the redirect target, but the check function is never imported, so the code crashes."
 claude,app/views/userController.py,76,76,CWE-601,URL Redirection to Untrusted Site ('Open Redirect'),"            logger.info(""User details were retrieved for user: "" + unencodedUserDetails.username)
             
             request.session['username'] = unencodedUserDetails.username
@@ -1023,7 +1023,7 @@ claude,app/views/userController.py,76,76,CWE-601,URL Redirection to Untrusted Si
 <parameter name=""command"">true</parameter>
 </invoke>
 
-I need to produce the fixed snippet only.",,
+I need to produce the fixed snippet only.",Incorrect,"The model didn't return any code, so nothing was fixed."
 claude,app/views/userController.py,93,93,CWE-601,URL Redirection to Untrusted Site ('Open Redirect'),"
         logger.info(""Attempting login with username: "" + username + "" and target: "" + target)
 
@@ -1045,7 +1045,7 @@ claude,app/views/userController.py,93,93,CWE-601,URL Redirection to Untrusted Si
             nextView = 'feed'
             response = redirect(nextView)
 
-        try:",,
+        try:",Correct,Only redirects to the target if it points back to this site.
 claude,app/views/userController.py,69,69,CWE-502,Deserialization of Untrusted Data,"            return render(request, 'app/login.html',{})
 
         else:
@@ -1066,7 +1066,7 @@ claude,app/views/userController.py,69,69,CWE-502,Deserialization of Untrusted Da
 
             logger.info(""User details were retrieved for user: "" + str(unencodedUserDetails['username']))
             
-            request.session['username'] = str(unencodedUserDetails['username'])",,
+            request.session['username'] = str(unencodedUserDetails['username'])",Incorrect,"Reads the cookie as JSON, but the cookie is still saved with pickle, so remember-me breaks."
 claude,app/views/userController.py,633,633,CWE-502,Deserialization of Untrusted Data,"
         # Update remember me functionality
         userDetailsCookie = request.COOKIES.get('user')
@@ -1090,7 +1090,7 @@ claude,app/views/userController.py,633,633,CWE-502,Deserialization of Untrusted 
             if isinstance(userDetailsData, dict):
                 unencodedUserDetails = SimpleNamespace(**{str(k): v for k, v in userDetailsData.items()})
                 unencodedUserDetails.username = username
-                response = updateInResponse(unencodedUserDetails, response)",,
+                response = updateInResponse(unencodedUserDetails, response)",Correct,"Reads the cookie as JSON and ignores bad cookies, so it can't run code."
 claude,app/views/userController.py,57,57,CWE-117,Improper Output Neutralization for Logs,"                username = ''
             if target is None:
                 target = ''
@@ -1110,7 +1110,7 @@ claude,app/views/userController.py,57,57,CWE-117,Improper Output Neutralization 
             logger.info(""Entering login with username %s and target %s"", safe_username, safe_target)
             
             request.username = username
-            request.target = target",,
+            request.target = target",Correct,Removes line breaks from the username and target before logging them.
 claude,app/views/userController.py,89,89,CWE-117,Improper Output Neutralization for Logs,"        username = request.POST.get('user')
         password = request.POST.get('password')
         remember = request.POST.get('remember')
@@ -1133,7 +1133,7 @@ claude,app/views/userController.py,89,89,CWE-117,Improper Output Neutralization 
         if (target != None) and (target) and (not target == ""null""):
             nextView = target
             response = redirect(nextView)
-        else:",,
+        else:",Correct,Removes line breaks from the username and target before logging them.
 claude,app/views/userController.py,103,111,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        try:
             logger.info(""Creating the Database connection"")
             with connection.cursor() as cursor:
@@ -1164,7 +1164,7 @@ claude,app/views/userController.py,103,111,CWE-89,Improper Neutralization of Spe
                 cursor.execute(sqlQuery, [username, hashlib.md5(password.encode('utf-8')).hexdigest()])
                 # GOOD CODE
                 # sqlQuery = ""select username, password, password_hint, created_at, last_login, \
-                #            real_name, blab_name from users where username=:username and password=:password;""",,
+                #            real_name, blab_name from users where username=:username and password=:password;""",Correct,Passes the username and password hash as parameters instead of gluing them into the query.
 claude,app/views/userController.py,105,105,CWE-328,Use of Weak Hash,"            with connection.cursor() as cursor:
                 logger.info(""Creating database query"")
                 # START VULN CODE
@@ -1185,7 +1185,7 @@ claude,app/views/userController.py,105,105,CWE-328,Use of Weak Hash,"           
                 logger.info(sqlQuery)
 
                 parsed = sqlparse.parse(sqlQuery)[0]
-                logger.info(""Attempted login with username and password: "" + parsed[8].value)",,
+                logger.info(""Attempted login with username and password: "" + parsed[8].value)",Incorrect,"Uses a new hash only at login, so nobody could log in, and the query still glues in the username."
 claude,app/views/userController.py,125,125,CWE-532,Insertion of Sensitive Information into Log File,"                row = cursor.fetchone()
 
                 if (row):
@@ -1205,7 +1205,7 @@ claude,app/views/userController.py,125,125,CWE-532,Insertion of Sensitive Inform
                     response.set_cookie('username', username)
                     private_key = rsa.generate_private_key(
                         public_exponent=65537, key_size=1024,) #CWE-326
-                    response.set_cookie('password', private_key)",,
+                    response.set_cookie('password', private_key)",Correct,Logs only the username instead of the whole user record.
 claude,app/views/userController.py,127,129,CWE-326,Inadequate Encryption Strength,"                if (row):
                     columns = [col[0] for col in cursor.description]
                     row = dict(zip(columns, row))
@@ -1227,7 +1227,7 @@ claude,app/views/userController.py,127,129,CWE-326,Inadequate Encryption Strengt
                     if (not remember is None):
                         currentUser = User(username=row[""username""],
                                     password_hint=row[""password_hint""], created_at=row[""created_at""],
-                                    last_login=row[""last_login""], real_name=row[""real_name""],",,
+                                    last_login=row[""last_login""], real_name=row[""real_name""],",Correct,Removes the weak RSA key and stops sending the private key in a cookie.
 claude,app/views/userController.py,126,129,CWE-1004,Sensitive Cookie Without 'HttpOnly' Flag,"
                 if (row):
                     columns = [col[0] for col in cursor.description]
@@ -1253,7 +1253,7 @@ claude,app/views/userController.py,126,129,CWE-1004,Sensitive Cookie Without 'Ht
                     if (not remember is None):
                         currentUser = User(username=row[""username""],
                                     password_hint=row[""password_hint""], created_at=row[""created_at""],
-                                    last_login=row[""last_login""], real_name=row[""real_name""],",,
+                                    last_login=row[""last_login""], real_name=row[""real_name""],",Correct,Adds HttpOnly and Secure to the cookies so JavaScript can't read them.
 claude,app/views/userController.py,138,139,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                                    password_hint=row[""password_hint""], created_at=row[""created_at""],
                                     last_login=row[""last_login""], real_name=row[""real_name""], 
                                     blab_name=row[""blab_name""])
@@ -1271,7 +1271,7 @@ claude,app/views/userController.py,138,139,CWE-89,Improper Neutralization of Spe
                     # if the username ends with ""totp"", add the TOTP login step
                     if username[-4:].lower() == ""totp"":
                         logger.info(""User "" + username + "" has TOTP enabled"")
-                        request.session['totp_username'] = row['username']",,
+                        request.session['totp_username'] = row['username']",Correct,Passes the username as a parameter in the UPDATE query.
 claude,app/views/userController.py,154,154,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"                    
                 else:
                     logger.info(""User not found"")
@@ -1286,7 +1286,7 @@ claude,app/views/userController.py,154,154,CWE-79,Improper Neutralization of Inp
                     logger.info(""User not found"")
 
                     request.error = ""Login failed. Please try again.""
-                    request.target = target",,
+                    request.target = target",Correct,Shows a generic error message so the username isn't put on the page.
 claude,app/views/userController.py,184,186,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    logger.info(""Entering password-hint with username: "" + username)
 
     try:
@@ -1310,7 +1310,7 @@ claude,app/views/userController.py,184,186,CWE-89,Improper Neutralization of Spe
             row = cursor.fetchone()
             
             if (row):
-                password = row[0]",,
+                password = row[0]",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,192,199,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"            row = cursor.fetchone()
             
             if (row):
@@ -1348,7 +1348,7 @@ claude,app/views/userController.py,192,199,CWE-79,Improper Neutralization of Inp
             logger.error(""Database error"", db_err)
             return HttpResponse(""ERROR!"") 
     except Exception as e:
-            logger.error(""Unexpected error"", e)",,
+            logger.error(""Unexpected error"", e)",Correct,"Escapes the username before showing it, so scripts show up as plain text."
 claude,app/views/userController.py,194,195,CWE-134,Use of Externally-Controlled Format String,"            if (row):
                 password = row[0]
 
@@ -1370,7 +1370,7 @@ claude,app/views/userController.py,194,195,CWE-134,Use of Externally-Controlled 
                 return HttpResponse(hint)
             else:
                 return HttpResponse(""No password found for "" + username)
-    except DatabaseError as db_err:",,
+    except DatabaseError as db_err:",Correct,"Uses a fixed format string, so the username can't be read as format code."
 claude,app/views/userController.py,225,227,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    # really here to display back to the user (it's a hack for a demo app ;) )
     try:
         #Create db connection
@@ -1395,7 +1395,7 @@ claude,app/views/userController.py,225,227,CWE-89,Improper Neutralization of Spe
             result = cursor.fetchone()
         if result:
             totpSecret = result[0]
-            logger.info(""Found TOTP secret"")",,
+            logger.info(""Found TOTP secret"")",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,259,261,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    # lookup the TOTP secret
     try:
         
@@ -1420,7 +1420,7 @@ claude,app/views/userController.py,259,261,CWE-89,Improper Neutralization of Spe
             result = cursor.fetchone()
             if result:
                 columns = [col[0] for col in cursor.description]
-                result = dict(zip(columns, result))",,
+                result = dict(zip(columns, result))",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,208,209,CWE-352,Cross-Site Request Forgery (CSRF),"    except Exception as e:
             logger.error(""Unexpected error"", e)
         
@@ -1441,7 +1441,7 @@ def totp(request):
     if(request.method == ""GET""):
         return showTotp(request)
     elif(request.method == ""POST""):
-        return processTotp(request)",,
+        return processTotp(request)",Incorrect,"Removes csrf_exempt, but CSRF checking is still turned off in settings, so nothing changes."
 claude,app/views/userController.py,315,316,CWE-352,Cross-Site Request Forgery (CSRF),"    logger.info(""Redirecting to login..."")
     return response
 
@@ -1462,7 +1462,7 @@ def register(request):
     if(request.method == ""GET""):
         return showRegister(request)
     elif(request.method == ""POST""):
-        return processRegister(request)",,
+        return processRegister(request)",Incorrect,"Removes csrf_exempt, but CSRF checking is still turned off in settings, so nothing changes."
 claude,app/views/userController.py,367,368,CWE-352,Cross-Site Request Forgery (CSRF),"        logger.error(""Unexpected error"", e)
     
     return render(request, 'app/register.html')
@@ -1479,7 +1479,7 @@ def registerFinish(request):
     if(request.method == ""GET""):
         return showRegisterFinish(request)
     elif(request.method == ""POST""):
-        return processRegisterFinish(request)",,
+        return processRegisterFinish(request)",Incorrect,"Removes csrf_exempt, but CSRF checking is still turned off in settings, so nothing changes."
 claude,app/views/userController.py,341,342,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
     # Get the Database Connection
     logger.info(""Creating the Database connection"")
@@ -1501,7 +1501,7 @@ claude,app/views/userController.py,341,342,CWE-89,Improper Neutralization of Spe
             if (row):
                 request.error = ""Username '"" + username + ""' already exists!""
                 return render(request, 'app/register.html')
-            else:",,
+            else:",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,354,354,CWE-532,Insertion of Sensitive Information into Log File,"                sk = SigningKey.generate()
                 vk = sk.verifying_key
                 logger.info(type(sk))
@@ -1522,7 +1522,7 @@ claude,app/views/userController.py,354,354,CWE-532,Insertion of Sensitive Inform
             
     except sqlite3.IntegrityError as ie:
         logger.error(ie.sqlite_errorcode, ie.sqlite_errorname)
-    except sqlite3.Error as ex :",,
+    except sqlite3.Error as ex :",Correct,Stops writing the random password to the log.
 claude,app/views/userController.py,409,420,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                #set variables to make easier to use
                 realName = form.cleaned_data.get('realName')
                 blabName = form.cleaned_data.get('blabName')
@@ -1564,7 +1564,7 @@ claude,app/views/userController.py,409,420,CWE-89,Improper Neutralization of Spe
                 logger.info(""Inserted new user record"")
                 # END EXAMPLE VULNERABILITY
         except IntegrityError as ie:
-            logger.error(""Integrity error"", ie)",,
+            logger.error(""Integrity error"", ie)",Correct,Passes all the new user values as parameters instead of gluing them into the query.
 claude,app/views/userController.py,412,413,CWE-256,Plaintext Storage of a Password,"                #mysqlCurrentDateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 #create query
                 query = ''
@@ -1587,7 +1587,7 @@ claude,app/views/userController.py,412,413,CWE-256,Plaintext Storage of a Passwo
                 query += (""datetime('now'),"")
                 query += (""'"" + realName + ""',"")
                 query += (""'"" + blabName + ""'"")
-                query += ("");"")",,
+                query += ("");"")",Correct,Saves an empty hint instead of the plain password.
 claude,app/views/userController.py,494,494,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"          
         logger.info(""Getting Database connection"")
         with connection.cursor() as cursor:    
@@ -1607,7 +1607,7 @@ claude,app/views/userController.py,494,494,CWE-89,Improper Neutralization of Spe
             hecklers=[]
             for i in myHecklersResults:
                 
-                heckler = Blabber()",,
+                heckler = Blabber()",Incorrect,"The query template still has quotes around '%s', so the query breaks."
 claude,app/views/userController.py,511,513,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
             # Get the audit trail for this user
             events = []
@@ -1629,7 +1629,7 @@ claude,app/views/userController.py,511,513,CWE-89,Improper Neutralization of Spe
             userHistoryResult = cursor.fetchall()
 
             for result in userHistoryResult :
-                events.append(result[0])",,
+                events.append(result[0])",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,521,523,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"
             for result in userHistoryResult :
                 events.append(result[0])
@@ -1653,7 +1653,7 @@ claude,app/views/userController.py,521,523,CWE-89,Improper Neutralization of Spe
             if not myInfoResults:
                 return JsonResponse({'message':'Error, no Inforesults found'})
             # Send these values to our View
-            columns = [col[0] for col in cursor.description]",,
+            columns = [col[0] for col in cursor.description]",Correct,Passes the username as a parameter instead of gluing it into the query.
 claude,app/views/userController.py,559,560,CWE-79,Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting'),"    username = request.POST.get('username')
     file = request.FILES.get('file')
     #TODO: Experiment with safe=False on JsonResponse, send in non-dict objects for serialization
@@ -1677,7 +1677,7 @@ claude,app/views/userController.py,559,560,CWE-79,Improper Neutralization of Inp
     logger.info(""entering processProfile"")
     sessionUsername = request.session.get('username')
 
-    # Ensure user is logged in",,
+    # Ensure user is logged in",Correct,"Escapes the values before putting them in the script, so they can't break out of it."
 claude,app/views/userController.py,584,586,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"        logger.info(""Getting Database connection"")
         # Get the Database Connection
         # TODO: Error in SQL execution
@@ -1702,7 +1702,7 @@ claude,app/views/userController.py,584,586,CWE-89,Improper Neutralization of Spe
 
             # If there is a record...
             if updateResult:
-                # failure",,
+                # failure",Correct,Removes the quotes and passes all three values as parameters.
 claude,app/views/userController.py,648,663,CWE-22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),"        
 
         # Get old image name, if any, to delete
@@ -1762,7 +1762,7 @@ claude,app/views/userController.py,648,663,CWE-22,Improper Limitation of a Pathn
             logger.error(""Error occured saving image"", e)
             response = JsonResponse({'message':""<script>alert('An error occurred, please try again.');</script>""},status=500)
             #response.status_code = 500
-            return response",,
+            return response",Correct,Blocks usernames like ../ so the upload can't write outside the image folder.
 claude,app/views/userController.py,652,654,CWE-434,Unrestricted Upload of File with Dangerous Type,"        if oldImage:
             os.remove(os.path.join(imageDir,oldImage))
         
@@ -1789,7 +1789,7 @@ claude,app/views/userController.py,652,654,CWE-434,Unrestricted Upload of File w
                 
                 response = JsonResponse({'message':""<script>alert('File must be a valid .png image');</script>""},status=422)
                 return response
-            logger.info(""Saving new profile image: "" + path)",,
+            logger.info(""Saving new profile image: "" + path)",Correct,"Checks that the file is really a PNG, not just named .png."
 claude,app/views/userController.py,696,696,CWE-22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),"        logger.info(""User is not Logged In - redirecting..."")
         return redirect('/login?target=profile')
     logger.info(""User is Logged In - continuing... UA="" + request.headers[""User-Agent""] + "" U="" + username)
@@ -1811,7 +1811,7 @@ claude,app/views/userController.py,696,696,CWE-22,Improper Limitation of a Pathn
     logger.info(""Fetching profile image: "" + path)
 
     try:
-        if os.path.exists(path):",,
+        if os.path.exists(path):",Correct,Makes sure the image path stays inside the image folder.
 claude,app/views/userController.py,732,733,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"    try:
         # Get the Database Connection
         logger.info(""Getting Database connection"")
@@ -1833,7 +1833,7 @@ claude,app/views/userController.py,732,733,CWE-89,Improper Neutralization of Spe
             result = cursor.fetchone()
             if not result:
                 # username does not exist
-                return False",,
+                return False",Correct,Removes the quotes and passes the username as a parameter.
 claude,app/views/userController.py,773,774,CWE-89,Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection'),"                    ""UPDATE listeners SET listener='%s' WHERE listener='%s'"",
                     ""UPDATE users_history SET blabber='%s' WHERE blabber='%s'"" ]
         
@@ -1856,7 +1856,7 @@ claude,app/views/userController.py,773,774,CWE-89,Improper Neutralization of Spe
 
         # Rename the user profile image to match new username
         oldImage = getProfileImageNameFromUsername(oldUsername)
-        if oldImage:",,
+        if oldImage:",Correct,Removes the quotes from all six queries and passes the usernames as parameters.
 claude,app/views/userController.py,785,787,CWE-22,Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal'),"            extension = '.png'
 
             logger.info(""Renaming profile image from "" + oldImage + "" to "" + newUsername + extension)
@@ -1884,7 +1884,7 @@ claude,app/views/userController.py,785,787,CWE-22,Improper Limitation of a Pathn
     except (sqlite3.Error, ModuleNotFoundError) as ex:
         logger.error(ex)
     except IntegrityError as er:
-        logger.error(er)",,
+        logger.error(er)",Correct,Makes sure both image paths stay inside the image folder before renaming.
 claude,verademo-python/settings.py,24,24,CWE-798,Use of Hard-coded Credentials,"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -1909,7 +1909,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# allow all hosts",,
+# allow all hosts",Out of Scope,Loads the secret key from an environment variable instead of hardcoding it.
 claude,verademo-python/settings.py,27,27,CWE-489,Active Debug Code,"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-m(k83)=fpt1d5&(u6_$+3ppc6s7!_(9!vps5f17yqp4=6ei$vv'
@@ -1942,7 +1942,7 @@ import os
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
 # allow all hosts
-ALLOWED_HOSTS = ['*']",,
+ALLOWED_HOSTS = ['*']",Out of Scope,Turns DEBUG off unless an environment variable turns it on.
 claude,verademo-python/settings.py,49,49,CWE-352,Cross-Site Request Forgery (CSRF),"
 MIDDLEWARE = [
     # 'django.middleware.security.SecurityMiddleware',
@@ -1961,4 +1961,4 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]",,
+]",Out of Scope,"Turns on CSRF checking, but the forms have no CSRF token, so most of the site would be blocked."
