@@ -1,0 +1,12 @@
+        logger.info("Attempting login with username: " + username + " and target: " + target)
+
+        from django.utils.http import url_has_allowed_host_and_scheme
+
+        if (target != None) and (target) and (not target == "null") and url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
+            nextView = target
+            response = redirect(nextView)
+        else:
+            nextView = 'feed'
+            response = redirect(nextView)
+
+        try:

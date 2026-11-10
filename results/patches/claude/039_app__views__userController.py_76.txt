@@ -1,0 +1,5 @@
+<invoke name="bash">
+<parameter name="command">true</parameter>
+</invoke>
+
+I need to produce the fixed snippet only.

@@ -1,0 +1,11 @@
+           if (row):
+                password = row[0]
+
+                logger.info(f"Password: {password}")
+
+                hint = "Username '{}' has password: {}".format(username, password[:2] + ("*" * (len(password) - 2)))
+                logger.info(hint)
+                return HttpResponse(hint)
+            else:
+                return HttpResponse("No password found for " + username)
+    except DatabaseError as db_err:

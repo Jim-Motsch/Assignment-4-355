@@ -1,0 +1,13 @@
+       username = request.POST.get('user')
+        password = request.POST.get('password')
+        remember = request.POST.get('remember')
+        target = request.POST.get('target')
+
+        safe_username = str(username).replace('\r', '\\r').replace('\n', '\\n')
+        safe_target = str(target).replace('\r', '\\r').replace('\n', '\\n')
+        logger.info("Attempting login with username: %s and target: %s", safe_username, safe_target)
+
+        if (target != None) and (target) and (not target == "null"):
+            nextView = target
+            response = redirect(nextView)
+        else:

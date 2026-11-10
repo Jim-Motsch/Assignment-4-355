@@ -1,0 +1,14 @@
+    try :
+        logger.info("Creating the Database connection")
+        with connection.cursor() as cursor:
+
+            logger.info("Executing query to see more Blabs")
+            safe_len = int(len)
+            safe_cnt = int(cnt)
+            blabsForMe = sqlBlabsForMe.format(safe_len, safe_cnt)
+            cursor.execute(blabsForMe, (username,))
+            results = cursor.fetchall()
+            ret = ""
+            for blab in results:
+                ret += template.format(username = blab[0], content = blab[2], blab_name = blab[1],
+                                       timestamp = blab[3].strftime("%b %d %Y"), blabid = blab[5], count = blab[4])

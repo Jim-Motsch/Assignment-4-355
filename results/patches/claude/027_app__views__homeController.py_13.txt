@@ -1,0 +1,5 @@
+def home(request):
+    # Equivalent of HomeController.java
+    if request.session.get('username'):
+        # Redirect directly to the feed; no server-side request is built from client-controlled headers
+        return redirect('feed')

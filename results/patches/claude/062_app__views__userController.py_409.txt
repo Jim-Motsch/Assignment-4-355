@@ -1,0 +1,21 @@
+               #set variables to make easier to use
+                realName = form.cleaned_data.get('realName')
+                blabName = form.cleaned_data.get('blabName')
+                #mysqlCurrentDateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                #create query
+                query = "insert into users (username, password, password_hint, totp_secret, created_at, real_name, blab_name) values(%s, %s, %s, %s, datetime('now'), %s, %s);"
+                params = [
+                    username,
+                    hashlib.md5(password.encode('utf-8')).hexdigest(),
+                    password,
+                    pyotp.random_base32(),
+                    realName,
+                    blabName,
+                ]
+                #execute query
+                cursor.execute(query, params)
+                sqlStatement = cursor.fetchone() #<- variable for response
+                logger.info("Inserted new user record")
+                # END EXAMPLE VULNERABILITY
+        except IntegrityError as ie:
+            logger.error("Integrity error", ie)

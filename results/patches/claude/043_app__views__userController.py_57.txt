@@ -1,0 +1,10 @@
+                username = ''
+            if target is None:
+                target = ''
+
+            safe_username = str(username).replace('\r', '\\r').replace('\n', '\\n')
+            safe_target = str(target).replace('\r', '\\r').replace('\n', '\\n')
+            logger.info("Entering login with username %s and target %s", safe_username, safe_target)
+            
+            request.username = username
+            request.target = target

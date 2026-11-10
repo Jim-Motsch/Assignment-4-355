@@ -1,0 +1,3 @@
+        except Exception as e:
+
+            self.logger.error("Unexpected error: %s", sys.exc_info()[0], exc_info=True)

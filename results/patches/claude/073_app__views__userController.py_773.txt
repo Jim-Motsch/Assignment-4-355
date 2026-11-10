@@ -1,0 +1,12 @@
+                    "UPDATE listeners SET listener='%s' WHERE listener='%s'",
+                    "UPDATE users_history SET blabber='%s' WHERE blabber='%s'" ]
+        
+                # Execute updates as part of a batch transaction
+                # This will roll back all changes if one query fails
+                for query in sqlStrQueries:
+                    cursor.execute(query.replace("'%s'", "%s"), (newUsername, oldUsername))
+
+
+        # Rename the user profile image to match new username
+        oldImage = getProfileImageNameFromUsername(oldUsername)
+        if oldImage:

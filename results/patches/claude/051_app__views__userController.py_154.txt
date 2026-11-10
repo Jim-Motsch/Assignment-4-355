@@ -1,0 +1,6 @@
+                   
+                else:
+                    logger.info("User not found")
+
+                    request.error = "Login failed. Please try again."
+                    request.target = target

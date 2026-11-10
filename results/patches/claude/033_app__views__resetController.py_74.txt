@@ -1,0 +1,35 @@
+def showReset(request):
+    logger.info("Entering showReset")
+    return render(request, 'app/reset.html',{})
+
+# Resets database users
+def processReset(request):
+    from django.core.exceptions import PermissionDenied
+
+    user = getattr(request, 'user', None)
+    if user is None or not user.is_authenticated or not user.is_superuser:
+        logger.warning("Unauthorized attempt to reset database")
+        raise PermissionDenied("Administrator privileges required")
+
+    if request.method != 'POST':
+        raise PermissionDenied("POST required")
+
+    confirm = request.POST.get('confirm')
+
+    if not confirm:
+        request.error = "Make sure to press confirm"
+        return render(request, 'app/reset.html')
+    logger.info("Entering processReset")
+
+
+    
+    # Drop existing tables and recreate from schema file
+    # TODO: Implement Vulnerability (Shell Injection)
+    # https://docs.python.org/2/library/subprocess.html#frequently-used-arguments
+    manage = os.path.join(os.path.dirname(__file__), '../../manage.py')
+    subprocess.run(["python3",manage,"flush","--noinput"], check=True)
+
+    try:
+        logger.info("Getting Database connection")
+        # Get the Database Connection
+        with connection.cursor() as cursor:

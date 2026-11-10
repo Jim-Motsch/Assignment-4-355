@@ -1,0 +1,8 @@
+    return response
+#
+# deals with loading and updating the "Blabbers" page
+def blabbers(request):
+    if request.method == "GET":
+        sort = request.GET.get('sort')
+        if (sort is None or not sort):
+            sort = "blab_name ASC"

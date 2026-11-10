@@ -1,0 +1,11 @@
+            return render(request, 'app/login.html',{})
+
+        else:
+            logger.info("User details were remembered")
+            import json
+            decoded = base64.b64decode(userDetailsCookie)
+            unencodedUserDetails = json.loads(decoded)
+
+            logger.info("User details were retrieved for user: " + str(unencodedUserDetails['username']))
+            
+            request.session['username'] = str(unencodedUserDetails['username'])

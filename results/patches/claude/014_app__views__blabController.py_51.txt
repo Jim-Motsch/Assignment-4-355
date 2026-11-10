@@ -1,0 +1,11 @@
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:
+
+                logger.info("Executing query to get all 'Blabs for me'")
+                blabsForMe = sqlBlabsForMe.format(10, 0)
+                cursor.execute(blabsForMe, (username,))
+                blabsForMeResults = cursor.fetchall()
+
+                feedBlabs = []
+                for blab in blabsForMeResults:
+                    author = Blabber()

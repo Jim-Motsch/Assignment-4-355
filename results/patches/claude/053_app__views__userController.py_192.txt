@@ -1,0 +1,21 @@
+            row = cursor.fetchone()
+            
+            if (row):
+                password = row[0]
+
+                logger.info(f"Password: {password}")
+
+                from django.utils.html import escape
+                safe_username = escape(username)
+                masked = password[:2] + ("*" * (len(password) - 2))
+                hint = "Username '{}' has password: {}".format(safe_username, masked)
+                logger.info(hint)
+                return HttpResponse(hint)
+            else:
+                from django.utils.html import escape
+                return HttpResponse("No password found for " + escape(username))
+    except DatabaseError as db_err:
+            logger.error("Database error", db_err)
+            return HttpResponse("ERROR!") 
+    except Exception as e:
+            logger.error("Unexpected error", e)

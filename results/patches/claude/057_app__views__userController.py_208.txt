@@ -1,0 +1,10 @@
+   except Exception as e:
+            logger.error("Unexpected error", e)
+        
+    return HttpResponse("ERROR!")
+
+def totp(request):
+    if(request.method == "GET"):
+        return showTotp(request)
+    elif(request.method == "POST"):
+        return processTotp(request)

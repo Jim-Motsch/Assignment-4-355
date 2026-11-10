@@ -1,0 +1,16 @@
+            extension = '.png'
+
+            logger.info("Renaming profile image from " + oldImage + " to " + newUsername + extension)
+            path = os.path.realpath(image_dir)
+            # path = os.path.realpath("./resources/images")
+            oldPath = os.path.realpath(os.path.join(path, oldImage))
+            newPath = os.path.realpath(os.path.join(path, newUsername + extension))
+            if os.path.dirname(oldPath) != path or os.path.dirname(newPath) != path:
+                logger.error("Invalid image path detected while renaming profile image")
+                return False
+            os.rename(oldPath, newPath)
+        return True
+    except (sqlite3.Error, ModuleNotFoundError) as ex:
+        logger.error(ex)
+    except IntegrityError as er:
+        logger.error(er)

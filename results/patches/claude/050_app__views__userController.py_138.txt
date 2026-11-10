@@ -1,0 +1,7 @@
+                   update = "UPDATE users SET last_login=datetime('now') WHERE username=%s;"
+                    cursor.execute(update, [row['username']])
+
+                    # if the username ends with "totp", add the TOTP login step
+                    if username[-4:].lower() == "totp":
+                        logger.info("User " + username + " has TOTP enabled")
+                        request.session['totp_username'] = row['username']

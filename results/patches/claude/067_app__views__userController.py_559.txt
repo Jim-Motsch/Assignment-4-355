@@ -1,0 +1,13 @@
+    username = request.POST.get('username')
+    file = request.FILES.get('file')
+    #TODO: Experiment with safe=False on JsonResponse, send in non-dict objects for serialization
+    # Initial response only get returns if everything else succeeds.
+    # This must be here in order to use set_cookie later in the program
+    from django.utils.html import escapejs
+    msg = f"<script>alert('Successfully changed values!\\nusername: {escapejs(username.lower())}\\nReal Name: {escapejs(realName)}\\nBlab Name: {escapejs(blabName)}');</script>"
+    response = JsonResponse({'values':{"username": username.lower(), "realName": realName, "blabName": blabName}, 'message':msg},status=200)
+    
+    logger.info("entering processProfile")
+    sessionUsername = request.session.get('username')
+
+    # Ensure user is logged in

@@ -1,0 +1,37 @@
+        create("stuart", "Stuart", "Stuart Sessions"),
+        create("scottsim", "Scott Simpson", "Scott Simpson")]
+
+
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseForbidden
+
+
+# Transfers the request depeneding on request type.
+@csrf_protect
+def reset(request):
+    if(request.method == "GET"): 
+        return showReset(request)
+    elif(request.method == "POST"):
+        return processReset(request)
+    else:
+        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True) #CWE-295
+        h.add_credentials('thiswaskevinsidea','hardcode') #CWE-798
+        data=h.request("http://localhost/",method='GET')
+        return data
+
+# Loads the reset webpage
+def showReset(request):
+    logger.info("Entering showReset")
+    return render(request, 'app/reset.html',{})
+
+# Resets database users
+def processReset(request):
+    if not (request.user.is_authenticated and request.user.is_superuser):
+        return HttpResponseForbidden("Not authorized")
+
+    confirm = request.POST.get('confirm')
+
+    if not confirm:
+        request.error = "Make sure to press confirm"
+        return render(request, 'app/reset.html')
+    logger.info("Entering processReset")

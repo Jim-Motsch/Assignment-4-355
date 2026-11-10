@@ -1,0 +1,13 @@
+   # really here to display back to the user (it's a hack for a demo app ;) )
+    try:
+        #Create db connection
+        with connection.cursor() as cursor:
+
+            sql = "SELECT totp_secret FROM users WHERE username = %s"
+            logger.info("Looking up TOTP secret for user")
+            cursor.execute(sql, [username])
+
+            result = cursor.fetchone()
+        if result:
+            totpSecret = result[0]
+            logger.info("Found TOTP secret")

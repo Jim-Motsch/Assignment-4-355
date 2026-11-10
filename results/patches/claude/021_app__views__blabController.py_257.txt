@@ -1,0 +1,12 @@
+        try :
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:
+
+                logger.info("Executing addComment")
+                parameterized_sql = addCommentSql.replace("'%s'", "%s")
+                cursor.execute(parameterized_sql, [blabid, username, comment, moment.now().format("YYYY-MM-DD hh:mm:ss")])
+                
+                if not cursor.rowcount:
+                    request.error = "Failed to add comment"
+
+                response = redirect("/blab?blabid=" + blabid)

@@ -1,0 +1,11 @@
+            with connection.cursor() as cursor:
+                logger.info("Creating database query")
+                # START VULN CODE
+                password_hash = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), username.encode('utf-8'), 600000).hex()
+                sqlQuery = "select username, password, password_hint, created_at, last_login, \
+                            real_name, blab_name from users where username='" + username + "' \
+                            and password='" + password_hash + "';"
+                logger.info(sqlQuery)
+
+                parsed = sqlparse.parse(sqlQuery)[0]
+                logger.info("Attempted login with username and password: " + parsed[8].value)

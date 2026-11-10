@@ -1,0 +1,15 @@
+```python
+            blabsForMe = sqlBlabsForMe.format(len, cnt)
+            cursor.execute(blabsForMe % (username,))
+            results = cursor.fetchall()
+            ret = ""
+            for blab in results:
+                ret += template.format(username = html.escape(str(blab[0])), content = html.escape(str(blab[2])), blab_name = html.escape(str(blab[1])),
+                                       timestamp = html.escape(blab[3].strftime("%b %d %Y")), blabid = html.escape(str(blab[5])), count = html.escape(str(blab[4])))    
+    except ConnectionError as ce:
+        logger.error("Unexpected connection error", ce)
+    except Exception as e:
+        logger.error("Unexpected error", e)
+```
+
+Note: this requires `import html` at the top of the file.

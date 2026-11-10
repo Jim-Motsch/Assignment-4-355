@@ -1,0 +1,12 @@
+        logger.info("User is Logged In - continuing... UA=" + request.headers["User-Agent"] + " U=" + username)
+
+        if (command is None or not command):
+            logger.info("Empty command provided...")
+            response = redirect('/login?target=blabbers')
+        logger.info("blabberUsername = " + str(blabberUsername).replace("\r", "_").replace("\n", "_"))
+        logger.info("command = " + str(command).replace("\r", "_").replace("\n", "_"))
+
+        try:
+            logger.info("Creating database connection")
+            with connection.cursor() as cursor:
+                module = command.capitalize()[:-1] + "Command"

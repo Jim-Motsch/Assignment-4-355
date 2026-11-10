@@ -1,0 +1,5 @@
+   else:
+        h = httplib2.Http(".cache", disable_ssl_certificate_validation=False)
+        h.add_credentials('thiswaskevinsidea','hardcode') #CWE-798
+        data=h.request("http://localhost/",method='GET')
+        return data

@@ -1,0 +1,55 @@
+import os
+import re
+import secrets
+
+##################RESET CONTROLLER#####################
+logger = logging.getLogger("VeraDemo:resetController")
+
+
+def _initial_password(username):
+    # Passwords are supplied via environment (VERADEMO_PASSWORD_<USERNAME>)
+    # or randomly generated; no credentials are stored in source code.
+    env_name = "VERADEMO_PASSWORD_" + re.sub(r"[^A-Za-z0-9]", "_", username).upper()
+    return os.environ.get(env_name) or secrets.token_urlsafe(24)
+
+
+# Did not include admin in users list due to pre-existing admin functionality with DJango
+users = [
+        create("admin", _initial_password("admin"), "Mr. Administrator"),
+        create("admin-totp", _initial_password("admin-totp"), "Admin with TOTP"),
+        create("john", _initial_password("john"), "John Smith"),
+        create("paul", _initial_password("paul"), "Paul Farrington"),
+        create("chrisc", _initial_password("chrisc"), "Chris Campbell"),
+        create("laurie", _initial_password("laurie"), "Laurie Mercer"),
+        create("nabil", _initial_password("nabil"), "Nabil Bousselham"),
+        create("julian", _initial_password("julian"), "Julian Totzek-Hallhuber"),
+        create("joash", _initial_password("joash"), "Joash Herbrink"),
+        create("andrzej", _initial_password("andrzej"), "Andrzej Szaryk"),
+        create("april", _initial_password("april"), "April Sauer"),
+        create("armando", _initial_password("armando"), "Armando Bioc"),
+        create("ben", _initial_password("ben"), "Ben Stoll"),
+        create("brian", _initial_password("brian"), "Brian Pitta"),
+        create("caitlin", _initial_password("caitlin"), "Caitlin Johanson"),
+        create("christraut", _initial_password("christraut"), "Chris Trautwein"),
+        create("christyson", _initial_password("christyson"), "Chris Tyson"),
+        create("clint", _initial_password("clint"), "Clint Pollock"),
+        create("clyde", _initial_password("clyde"), "Clyde Shtino"),
+        create("cody", _initial_password("cody"), "Cody Bertram"),
+        create("derek", _initial_password("derek"), "Derek Chowaniec"),
+        create("eric", _initial_password("eric"), "Eric Ghilani"),
+        create("glenn", _initial_password("glenn"), "Glenn Whittemore"),
+        create("grant", _initial_password("grant"), "Grant Robinson"),
+        create("gregory", _initial_password("gregory"), "Gregory Wolford"),
+        create("jacob", _initial_password("jacob"), "Jacob Martel"),
+        create("jeremy", _initial_password("jeremy"), "Jeremy Anderson"),
+        create("johnny", _initial_password("johnny"), "Johnny Wong"),
+        create("kevin", _initial_password("kevin"), "Kevin Rise"),
+        create("kevinliu", _initial_password("kevinliu"), "Kevin Liu"),
+        create("scottrum", _initial_password("scottrum"), "Scott Rumrill"),
+        create("stuart", _initial_password("stuart"), "Stuart Sessions"),
+        create("scottsim", _initial_password("scottsim"), "Scott Simpson")]
+
+
+# Transfers the request depeneding on request type.
+def reset(request):
+    if(request.method == "GET"):

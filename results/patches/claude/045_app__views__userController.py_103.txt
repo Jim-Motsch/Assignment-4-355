@@ -1,0 +1,13 @@
+       try:
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:
+                logger.info("Creating database query")
+                sqlQuery = "select username, password, password_hint, created_at, last_login, \
+                            real_name, blab_name from users where username=%s \
+                            and password=%s;"
+                logger.info("Attempted login with username: " + repr(username))
+
+                cursor.execute(sqlQuery, [username, hashlib.md5(password.encode('utf-8')).hexdigest()])
+                # GOOD CODE
+                # sqlQuery = "select username, password, password_hint, created_at, last_login, \
+                #            real_name, blab_name from users where username=:username and password=:password;"

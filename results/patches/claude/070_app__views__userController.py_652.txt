@@ -1,0 +1,15 @@
+        if oldImage:
+            os.remove(os.path.join(imageDir,oldImage))
+        
+        try:
+            extension = file.name.lower().endswith('.png')
+            header = file.read(8)
+            file.seek(0)
+            is_png = header == b'\x89PNG\r\n\x1a\n'
+            if extension and is_png:
+                path = imageDir + '/' + username + '.png'
+            else:
+                
+                response = JsonResponse({'message':"<script>alert('File must be a valid .png image');</script>"},status=422)
+                return response
+            logger.info("Saving new profile image: " + path)

@@ -1,0 +1,14 @@
+        # Update remember me functionality
+        userDetailsCookie = request.COOKIES.get('user')
+        if userDetailsCookie is not None:
+            import json
+            from types import SimpleNamespace
+            try:
+                decoded = base64.b64decode(userDetailsCookie)
+                userDetailsData = json.loads(decoded.decode('utf-8'))
+            except (ValueError, UnicodeDecodeError):
+                userDetailsData = None
+            if isinstance(userDetailsData, dict):
+                unencodedUserDetails = SimpleNamespace(**{str(k): v for k, v in userDetailsData.items()})
+                unencodedUserDetails.username = username
+                response = updateInResponse(unencodedUserDetails, response)

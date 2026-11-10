@@ -1,0 +1,10 @@
+   logger.info("Redirecting to login...")
+    return response
+
+# CSRF protection is enforced by Django's CsrfViewMiddleware; the form must include a csrf token
+# transfers register request to appropriate handler
+def register(request):
+    if(request.method == "GET"):
+        return showRegister(request)
+    elif(request.method == "POST"):
+        return processRegister(request)

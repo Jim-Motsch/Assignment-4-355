@@ -1,0 +1,15 @@
+        return showReset(request)
+    elif(request.method == "POST"):
+        return processReset(request)
+    else:
+        import os
+        h = httplib2.Http(".cache", disable_ssl_certificate_validation=True) #CWE-295
+        service_user = os.environ.get('RESET_SERVICE_USER')
+        service_password = os.environ.get('RESET_SERVICE_PASSWORD')
+        if service_user and service_password:
+            h.add_credentials(service_user, service_password)
+        data=h.request("http://localhost/",method='GET')
+        return data
+
+# Loads the reset webpage
+def showReset(request):

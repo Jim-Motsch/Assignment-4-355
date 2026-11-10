@@ -1,0 +1,10 @@
+                row = cursor.fetchone()
+
+                if (row):
+                    columns = [col[0] for col in cursor.description]
+                    row = dict(zip(columns, row))
+                    logger.info("User found: %r", username)
+                    response.set_cookie('username', username)
+                    private_key = rsa.generate_private_key(
+                        public_exponent=65537, key_size=1024,) #CWE-326
+                    response.set_cookie('password', private_key)

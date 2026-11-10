@@ -1,0 +1,31 @@
+    
+    class Meta:
+        db_table='users'
+    
+    username = models.CharField(primary_key=True, max_length=100)
+    password = models.CharField(max_length=255,null=True)
+    password_hint = models.CharField(max_length=100, null=True)
+    totp_secret = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(null=True)
+    last_login = models.DateTimeField(null=True)
+    real_name = models.CharField(max_length=100, null=True)
+    blab_name = models.CharField(max_length=100, null=True)
+
+    def set_password(self, raw_password):
+        from django.contrib.auth.hashers import make_password
+        self.password = make_password(raw_password)
+
+    def check_password(self, raw_password):
+        from django.contrib.auth.hashers import check_password
+        if not self.password or raw_password is None:
+            return False
+        return check_password(raw_password, self.password)
+
+    def save(self, *args, **kwargs):
+        from django.contrib.auth.hashers import identify_hasher, make_password
+        if self.password:
+            try:
+                identify_hasher(self.password)
+            except ValueError:
+                self.password = make_password(self.password)
+        super().save(*args, **kwargs)

@@ -1,0 +1,8 @@
+# Creates a new user from just username, blabname, and realname
+def create(userName, blabName,realName):
+    import secrets
+    # Generate a random, unguessable initial password instead of reusing the username
+    password = secrets.token_urlsafe(16)
+    dateCreated = moment.now().format("YYYY-MM-DD hh:mm:ss")
+    lastLogin = None
+    return User(userName, hashlib.md5(password.encode('utf-8')).hexdigest(), "", pyotp.random_base32(), dateCreated, lastLogin, realName, blabName)

@@ -1,0 +1,11 @@
+   return render(request, 'app/tools.html', {"host" : host})
+
+# pings selected host and outputs the result
+def ping(host):
+    output = ""
+    safe_host = str(host).replace("\r", "\\r").replace("\n", "\\n")
+    logger.info("Pinging %s", safe_host)
+    try:
+        p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        
+        stdout, stderr = p.communicate(timeout=5)

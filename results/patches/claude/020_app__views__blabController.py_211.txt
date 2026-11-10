@@ -1,0 +1,11 @@
+                    request.blab_name = blabDetailsResults[1]
+                    request.blabid = blabid
+
+                    # Get comments
+                    logger.info("Executing query to get all comments")
+                    cursor.execute(blabCommentsSql, (blabid,))
+                    blabCommentsResults = cursor.fetchall()
+
+                    comments = []
+                    for blab in blabCommentsResults:
+                        author = Blabber()

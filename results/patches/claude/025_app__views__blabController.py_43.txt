@@ -1,0 +1,12 @@
+   if request.method == "GET":
+        username = request.session.get('username')
+        if not username:
+            logger.info("User is not Logged In - redirecting...")
+            return redirect('/login?target=feed')
+        safe_ua = str(request.headers.get("User-Agent", "")).replace("\r", "\\r").replace("\n", "\\n")
+        safe_username = str(username).replace("\r", "\\r").replace("\n", "\\n")
+        logger.info("User is Logged In - continuing... UA=%s U=%s", safe_ua, safe_username)
+
+        try:
+            logger.info("Creating the Database connection")
+            with connection.cursor() as cursor:

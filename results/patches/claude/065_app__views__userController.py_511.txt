@@ -1,0 +1,10 @@
+           # Get the audit trail for this user
+            events = []
+
+            sqlMyEvents = "select event from users_history where blabber=%s ORDER BY eventid DESC; "
+            logger.info(sqlMyEvents)
+            cursor.execute(sqlMyEvents, (username,))
+            userHistoryResult = cursor.fetchall()
+
+            for result in userHistoryResult :
+                events.append(result[0])

@@ -1,0 +1,12 @@
+    f = image_dir
+    base_dir = os.path.realpath(f)
+    path = os.path.realpath(os.path.join(base_dir, os.path.basename(imageName)))
+
+    if os.path.commonpath([base_dir, path]) != base_dir:
+        logger.warning("Rejected invalid profile image path")
+        return redirect('/login?target=profile')
+
+    logger.info("Fetching profile image: " + path)
+
+    try:
+        if os.path.exists(path):

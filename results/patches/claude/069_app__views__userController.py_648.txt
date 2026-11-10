@@ -1,0 +1,36 @@
+        
+        # Reject usernames that could escape the image directory
+        baseDir = os.path.realpath(imageDir)
+        if (not username or username in ('.', '..') or username != os.path.basename(username)
+                or '/' in username or '\\' in username or '\x00' in username):
+            return JsonResponse({'message': "Invalid username"}, status=400)
+        newPath = os.path.realpath(os.path.join(baseDir, username + '.png'))
+        if os.path.dirname(newPath) != baseDir:
+            return JsonResponse({'message': "Invalid username"}, status=400)
+
+        # Get old image name, if any, to delete
+        oldImage = getProfileImageNameFromUsername(username)
+        if oldImage:
+            oldPath = os.path.realpath(os.path.join(baseDir, os.path.basename(oldImage)))
+            if os.path.dirname(oldPath) == baseDir and os.path.exists(oldPath):
+                os.remove(oldPath)
+        
+        try:
+            #Potential VULN? ending with .png, having different file type
+            extension = file.name.lower().endswith('.png')
+            if extension:
+                path = newPath
+            else:
+                
+                response = JsonResponse({'message':"<script>alert('File must end in .png');</script>"},status=422)
+                return response
+            logger.info("Saving new profile image: " + path)
+
+            with open(path, 'wb') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+        except IOError as e:
+            logger.error("Error occured saving image", e)
+            response = JsonResponse({'message':"<script>alert('An error occurred, please try again.');</script>"},status=500)
+            #response.status_code = 500
+            return response
